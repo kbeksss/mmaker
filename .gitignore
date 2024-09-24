@@ -20,7 +20,7 @@ _static
 out
 dist
 build
-
+.idea
 # environment variables
 .env
 .env.local
