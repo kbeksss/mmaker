@@ -3,12 +3,14 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import { GoogleLogin } from '@react-oauth/google';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
+import { Stack } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
@@ -22,6 +24,7 @@ import { Form, Field } from 'src/components/hook-form';
 import { useAuthContext } from '../../hooks';
 import { FormHead } from '../../components/form-head';
 import { signInWithPassword } from '../../context/jwt';
+import { FormDivider } from '../../components/form-divider';
 
 // ----------------------------------------------------------------------
 
@@ -73,6 +76,14 @@ export function JwtSignInView() {
       setErrorMsg(typeof error === 'string' ? error : error.message);
     }
   });
+
+  const handleSuccess = (response) => {
+    console.log('Success:', response);
+  };
+
+  const handleError = () => {
+    console.log('Login Failed');
+  };
 
   const renderForm = (
     <Box gap={3} display="flex" flexDirection="column">
@@ -151,6 +162,10 @@ export function JwtSignInView() {
       <Form methods={methods} onSubmit={onSubmit}>
         {renderForm}
       </Form>
+      <FormDivider />
+      <Stack direction="row" justifyContent="center">
+        <GoogleLogin onSuccess={handleSuccess} onError={handleError} />
+      </Stack>
     </>
   );
 }

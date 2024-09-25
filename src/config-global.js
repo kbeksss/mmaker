@@ -50,6 +50,9 @@ export const CONFIG = {
     domain: import.meta.env.VITE_AUTH0_DOMAIN ?? '',
     callbackUrl: import.meta.env.VITE_AUTH0_CALLBACK_URL ?? '',
   },
+  google: {
+    clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID ?? '',
+  },
   /**
    * Supabase
    */

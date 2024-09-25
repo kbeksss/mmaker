@@ -9,6 +9,8 @@ import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
+import { GoogleLogin } from '@react-oauth/google';
+import { Stack } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
@@ -23,6 +25,8 @@ import { signUp } from '../../context/jwt';
 import { useAuthContext } from '../../hooks';
 import { FormHead } from '../../components/form-head';
 import { SignUpTerms } from '../../components/sign-up-terms';
+import { FormDivider } from '../../components/form-divider';
+import { FormSocials } from '../../components/form-socials';
 
 // ----------------------------------------------------------------------
 
@@ -83,6 +87,14 @@ export function JwtSignUpView() {
       setErrorMsg(typeof error === 'string' ? error : error.message);
     }
   });
+
+  const handleSuccess = (response) => {
+    console.log('Success:', response);
+  };
+
+  const handleError = () => {
+    console.log('Login Failed');
+  };
 
   const renderForm = (
     <Box gap={3} display="flex" flexDirection="column">
@@ -149,6 +161,10 @@ export function JwtSignUpView() {
         {renderForm}
       </Form>
 
+      <FormDivider />
+      <Stack direction="row" justifyContent="center">
+        <GoogleLogin onSuccess={handleSuccess} onError={handleError} />
+      </Stack>
       <SignUpTerms />
     </>
   );

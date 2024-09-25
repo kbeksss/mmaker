@@ -17,12 +17,6 @@ export function FormSocials({
       <IconButton color="inherit" onClick={signInWithGoogle}>
         <GoogleIcon width={22} />
       </IconButton>
-      <IconButton color="inherit" onClick={singInWithGithub}>
-        <GithubIcon width={22} />
-      </IconButton>
-      <IconButton color="inherit" onClick={signInWithTwitter}>
-        <TwitterIcon width={22} />
-      </IconButton>
     </Box>
   );
 }
