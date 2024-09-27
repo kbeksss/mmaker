@@ -25,6 +25,30 @@ export const signInWithPassword = async ({ email, password }) => {
   }
 };
 
+const tempUserCreds = {
+  email: 'demo@minimals.cc',
+  password: '@demo1',
+};
+
+export const signInWithMetamask = async () => {
+  try {
+    const params = tempUserCreds;
+
+    const res = await axios.post(endpoints.auth.signIn, params);
+
+    const { accessToken } = res.data;
+
+    if (!accessToken) {
+      throw new Error('Access token not found in response');
+    }
+
+    setSession(accessToken);
+  } catch (error) {
+    console.error('Error during sign in:', error);
+    throw error;
+  }
+};
+
 /** **************************************
  * Sign up
  *************************************** */

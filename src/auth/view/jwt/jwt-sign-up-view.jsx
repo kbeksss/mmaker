@@ -26,7 +26,7 @@ import { useAuthContext } from '../../hooks';
 import { FormHead } from '../../components/form-head';
 import { SignUpTerms } from '../../components/sign-up-terms';
 import { FormDivider } from '../../components/form-divider';
-import { FormSocials } from '../../components/form-socials';
+import FormWeb3 from '../../components/form-web3';
 
 // ----------------------------------------------------------------------
 
@@ -133,6 +133,7 @@ export function JwtSignUpView() {
       >
         Create account
       </LoadingButton>
+      <FormWeb3 setErrorMsg={setErrorMsg} />
     </Box>
   );
 

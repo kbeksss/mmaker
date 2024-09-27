@@ -25,6 +25,7 @@ import { useAuthContext } from '../../hooks';
 import { FormHead } from '../../components/form-head';
 import { signInWithPassword } from '../../context/jwt';
 import { FormDivider } from '../../components/form-divider';
+import FormWeb3 from '../../components/form-web3';
 
 // ----------------------------------------------------------------------
 
@@ -129,6 +130,7 @@ export function JwtSignInView() {
       >
         Sign in
       </LoadingButton>
+      <FormWeb3 setErrorMsg={setErrorMsg} />
     </Box>
   );
 
@@ -146,19 +148,16 @@ export function JwtSignInView() {
         }
         sx={{ textAlign: { xs: 'center', md: 'left' } }}
       />
-
       <Alert severity="info" sx={{ mb: 3 }}>
         Use <strong>{defaultValues.email}</strong>
         {' with password '}
         <strong>{defaultValues.password}</strong>
       </Alert>
-
       {!!errorMsg && (
         <Alert severity="error" sx={{ mb: 3 }}>
           {errorMsg}
         </Alert>
       )}
-
       <Form methods={methods} onSubmit={onSubmit}>
         {renderForm}
       </Form>

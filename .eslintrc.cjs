@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   env: { browser: true, es2020: true },
-  plugins: ['perfectionist', 'unused-imports', 'prettier'],
+  plugins: ['unused-imports', 'prettier'],
   extends: ['airbnb', 'airbnb/hooks', 'prettier'],
   parserOptions: {
     ecmaVersion: 'latest',
@@ -58,49 +58,6 @@ module.exports = {
     'unused-imports/no-unused-vars': [
       0,
       { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' },
-    ],
-    // perfectionist
-    'perfectionist/sort-exports': [1, { order: 'asc', type: 'line-length' }],
-    'perfectionist/sort-named-imports': [1, { order: 'asc', type: 'line-length' }],
-    'perfectionist/sort-named-exports': [1, { order: 'asc', type: 'line-length' }],
-    'perfectionist/sort-imports': [
-      1,
-      {
-        order: 'asc',
-        type: 'line-length',
-        'newlines-between': 'always',
-        groups: [
-          'style',
-          'type',
-          ['builtin', 'external'],
-          'custom-mui',
-          'custom-routes',
-          'custom-hooks',
-          'custom-utils',
-          'internal',
-          'custom-components',
-          'custom-sections',
-          'custom-auth',
-          'custom-types',
-          ['parent', 'sibling', 'index'],
-          ['parent-type', 'sibling-type', 'index-type'],
-          'object',
-          'unknown',
-        ],
-        'custom-groups': {
-          value: {
-            ['custom-mui']: '@mui/**',
-            ['custom-auth']: 'src/auth/**',
-            ['custom-hooks']: 'src/hooks/**',
-            ['custom-utils']: 'src/utils/**',
-            ['custom-types']: 'src/types/**',
-            ['custom-routes']: 'src/routes/**',
-            ['custom-sections']: 'src/sections/**',
-            ['custom-components']: 'src/components/**',
-          },
-        },
-        'internal-pattern': ['src/**'],
-      },
     ],
   },
 };
