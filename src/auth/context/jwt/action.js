@@ -6,6 +6,25 @@ import { STORAGE_KEY } from './constant';
 /** **************************************
  * Sign in
  *************************************** */
+export const signInOAth = async ({ token, name }) => {
+  try {
+    const params = { token, name };
+
+    const res = await axios.post(endpoints.auth.oAth, params);
+
+    const { accessToken } = res.data;
+
+    if (!accessToken) {
+      throw new Error('Access token not found in response');
+    }
+
+    setSession(accessToken);
+  } catch (error) {
+    console.error('Error during sign in:', error);
+    throw error;
+  }
+};
+
 export const signInWithPassword = async ({ email, password }) => {
   try {
     const params = { email, password };

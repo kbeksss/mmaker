@@ -23,7 +23,7 @@ import { Form, Field } from 'src/components/hook-form';
 
 import { useAuthContext } from '../../hooks';
 import { FormHead } from '../../components/form-head';
-import { signInWithPassword } from '../../context/jwt';
+import { signInOAth, signInWithPassword } from '../../context/jwt';
 import { FormDivider } from '../../components/form-divider';
 import FormWeb3 from '../../components/form-web3';
 
@@ -78,8 +78,19 @@ export function JwtSignInView() {
     }
   });
 
-  const handleSuccess = (response) => {
-    console.log('Success:', response);
+  const handleSuccess = async (response) => {
+    try {
+      if (!response) {
+        return;
+      }
+      await signInOAth({ token: response?.credential, name: 'some name' });
+      console.log('res', response);
+      await checkUserSession?.();
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+      setErrorMsg(typeof error === 'string' ? error : error.message);
+    }
   };
 
   const handleError = () => {

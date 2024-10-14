@@ -23,7 +23,7 @@ export default function App() {
 
   return (
     <AuthProvider>
-      <GoogleOAuthProvider clientId="903895607285-m7ba4uk338l3jkp55q15ri1m1sek22j7.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId="251391329344-io276vorrs5b28slc90ot1q0b5tfefsm.apps.googleusercontent.com">
         <SettingsProvider settings={defaultSettings}>
           <ThemeProvider>
             <MotionLazy>
