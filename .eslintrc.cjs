@@ -39,7 +39,6 @@ module.exports = {
     'no-promise-executor-return': 0,
     'import/prefer-default-export': 0,
     'prefer-destructuring': [1, { object: true, array: false }],
-    // react
     'react/prop-types': 0,
     'react/no-children-prop': 0,
     'react/react-in-jsx-scope': 0,

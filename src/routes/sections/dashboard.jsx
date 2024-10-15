@@ -12,6 +12,7 @@ import { AuthGuard } from 'src/auth/guard';
 
 const IndexPage = lazy(() => import('src/pages/dashboard/one'));
 const PageTwo = lazy(() => import('src/pages/dashboard/two'));
+const BotPage = lazy(() => import('src/pages/dashboard/bot'));
 const PageThree = lazy(() => import('src/pages/dashboard/three'));
 const PageFour = lazy(() => import('src/pages/dashboard/four'));
 const PageFive = lazy(() => import('src/pages/dashboard/five'));
@@ -34,6 +35,7 @@ export const dashboardRoutes = [
     children: [
       { element: <IndexPage />, index: true },
       { path: 'two', element: <PageTwo /> },
+      { path: 'bot', element: <BotPage /> },
       { path: 'three', element: <PageThree /> },
       {
         path: 'group',

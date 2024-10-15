@@ -1,13 +1,11 @@
 import { Helmet } from 'react-helmet-async';
 
 import { CONFIG } from 'src/config-global';
-
-import { BlankView } from 'src/sections/blank/view';
-import { OverviewAppView } from 'src/sections/overview/app/view';
+import { BotFormView } from 'src/sections/bot/view';
 
 // ----------------------------------------------------------------------
 
-const metadata = { title: `Page one | Dashboard - ${CONFIG.appName}` };
+const metadata = { title: `Bot ${CONFIG.appName}` };
 
 export default function Page() {
   return (
@@ -15,7 +13,8 @@ export default function Page() {
       <Helmet>
         <title> {metadata.title}</title>
       </Helmet>
-      <OverviewAppView />
+
+      <BotFormView />
     </>
   );
 }
