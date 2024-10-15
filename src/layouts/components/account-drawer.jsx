@@ -6,7 +6,7 @@ import Avatar from '@mui/material/Avatar';
 import Drawer from '@mui/material/Drawer';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { useTheme } from '@mui/material/styles';
+import {useColorScheme, useTheme} from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
@@ -26,6 +26,8 @@ import { useMockedUser } from 'src/auth/hooks';
 import { UpgradeBlock } from './nav-upgrade';
 import { AccountButton } from './account-button';
 import { SignOutButton } from './sign-out-button';
+import {BaseOption} from "../../components/settings/drawer/base-option";
+import {useSettingsContext} from "../../components/settings/index";
 
 // ----------------------------------------------------------------------
 
@@ -33,6 +35,9 @@ export function AccountDrawer({ data = [], sx, ...other }) {
   const theme = useTheme();
 
   const router = useRouter();
+
+  const { mode, setMode } = useColorScheme();
+  const settings = useSettingsContext();
 
   const pathname = usePathname();
 
@@ -174,7 +179,17 @@ export function AccountDrawer({ data = [], sx, ...other }) {
               );
             })}
           </Stack>
-
+          <Box sx={{ px: 2.5, py: 3 }}>
+            <BaseOption
+              label="Dark mode"
+              icon="moon"
+              selected={settings.colorScheme === 'dark'}
+              onClick={() => {
+                settings.onUpdateField('colorScheme', mode === 'light' ? 'dark' : 'light');
+                setMode(mode === 'light' ? 'dark' : 'light');
+              }}
+            />
+          </Box>
           <Box sx={{ px: 2.5, py: 3 }}>
             <UpgradeBlock />
           </Box>

@@ -152,10 +152,6 @@ export function DashboardLayout({ sx, children, header, data }) {
                 />
                 {/* -- Notifications popover -- */}
                 <NotificationsDrawer data={_notifications} />
-                {/* -- Contacts popover -- */}
-                <ContactsPopover data={_contacts} />
-                {/* -- Settings button -- */}
-                <SettingsButton />
                 {/* -- Account drawer -- */}
                 <AccountDrawer data={_account} />
               </Box>

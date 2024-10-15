@@ -15,6 +15,7 @@ import { varAlpha, bgGradient } from 'src/theme/styles';
 import { Label } from 'src/components/label';
 
 import { useMockedUser } from 'src/auth/hooks';
+import { useRouter } from '../../routes/hooks';
 
 // ----------------------------------------------------------------------
 
@@ -74,6 +75,7 @@ export function NavUpgrade({ sx, ...other }) {
 // ----------------------------------------------------------------------
 
 export function UpgradeBlock({ sx, ...other }) {
+  const router = useRouter();
   return (
     <Stack
       sx={{
@@ -132,7 +134,12 @@ export function UpgradeBlock({ sx, ...other }) {
           Power up Productivity!
         </Box>
 
-        <Button variant="contained" size="small" color="warning">
+        <Button
+          onClick={() => router.replace('/pricing')}
+          variant="contained"
+          size="small"
+          color="warning"
+        >
           Upgrade to Pro
         </Button>
       </Stack>

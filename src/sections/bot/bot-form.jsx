@@ -1,41 +1,63 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { z as zod } from 'zod';
 import { Form, Field } from 'src/components/hook-form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Card, CardHeader, Grid, Stack } from '@mui/material';
+import { Box, Card, CardHeader, Grid, MenuItem, Stack } from '@mui/material';
+import axios from 'axios';
 
-export const BotSchema = zod.object({
-  apiKey: zod.string().min(1, { message: 'api key is required!' }),
-  secretKey: zod.string().min(1, { message: 'secret key is required!' }),
-  symbol: zod.string().min(1, { message: 'symbol is required!' }),
-  buyDepth: zod.number(),
-  sellDepth: zod.number(),
-  buyNumber: zod.number(),
-  sellNumber: zod.number(),
-  budgetQuote: zod.number(),
-  budgetToken: zod.number(),
-  maxSpread: zod.number(),
-  minSpread: zod.number(),
-});
+export const BotSchema = zod
+  .object({
+    secretKey: zod.string(),
+    symbol: zod.string({ required_error: 'Symbol is required!' }),
+    buyDepth: zod.number(),
+    sellDepth: zod.number(),
+    buyNumber: zod.number({ required_error: 'Number of orders is required' }),
+    sellNumber: zod.number({ required_error: 'Number of orders is required' }),
+    budgetQuote: zod.number(),
+    budgetToken: zod.number(),
+    maxSpread: zod.number(),
+    minSpread: zod.number(),
+  })
+  .partial()
+  .required({
+    buyNumber: true,
+    sellNumber: true,
+    symbol: true,
+  });
+
+const getFromBinance = async () => {
+  const { data } = await axios.get('https://api.binance.com/api/v3/ticker/24hr');
+  return data.map((pair) => {
+    const symbol = pair.symbol;
+    const priceChangePercent = parseFloat(pair.priceChangePercent);
+    const baseAsset = symbol.slice(0, -4);
+    const quoteAsset = symbol.slice(-4);
+    const formattedSymbol = `${baseAsset}/${quoteAsset}`;
+    return `${formattedSymbol}: ${priceChangePercent.toFixed(2)}%`;
+  });
+};
 
 const BotForm = () => {
   const defaultValues = useMemo(
     () => ({
-      apiKey: '',
       secretKey: '',
       symbol: '',
-      buyDepth: '',
-      sellDepth: '',
-      buyNumber: '',
-      sellNumber: '',
-      budgetQuote: '',
-      budgetToken: '',
-      maxSpread: '',
-      minSpread: '',
+      buyDepth: undefined,
+      sellDepth: undefined,
+      buyNumber: undefined,
+      sellNumber: undefined,
+      budgetQuote: undefined,
+      budgetToken: undefined,
+      maxSpread: undefined,
+      minSpread: undefined,
     }),
     []
   );
+  const [symbols, setSymbols] = useState([]);
+  useEffect(() => {
+    getFromBinance().then((res) => setSymbols(res));
+  }, []);
   const methods = useForm({
     mode: 'all',
     resolver: zodResolver(BotSchema),
@@ -63,9 +85,17 @@ const BotForm = () => {
         <Card>
           <CardHeader title="Keys" />
           <Stack spacing={3} sx={{ p: 3 }}>
-            <Field.Text name="apiKey" label="Api key" />
             <Field.Text name="secretKey" label="Secret key" />
-            <Field.Text name="symbol" label="Symbol (e.g., BTCUSDT):" />
+            <Field.Autocomplete
+              name="symbol"
+              label="Symbol (e.g., BTCUSDT):"
+              options={symbols}
+              renderOption={(props, option) => (
+                <li {...props} key={option}>
+                  {option}
+                </li>
+              )}
+            />
           </Stack>
         </Card>
         <Grid container spacing={1}>
@@ -94,10 +124,10 @@ const BotForm = () => {
           <Box sx={{ p: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <Field.Text name="budgetToken" type="number" label="Budget Token:" />
+                <Field.Text name="maxSpread" type="number" label="Max Spread BPS:" />
               </Grid>
               <Grid item xs={6}>
-                <Field.Text name="budgetToken" type="number" label="Budget Token:" />
+                <Field.Text name="minSpread" type="number" label="Min Spread BPS:" />
               </Grid>
             </Grid>
           </Box>
