@@ -6,7 +6,7 @@ import Avatar from '@mui/material/Avatar';
 import Drawer from '@mui/material/Drawer';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import {useColorScheme, useTheme} from '@mui/material/styles';
+import { useColorScheme, useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
@@ -21,13 +21,13 @@ import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
 import { AnimateAvatar } from 'src/components/animate';
 
-import { useMockedUser } from 'src/auth/hooks';
+import { useAuthContext, useMockedUser } from 'src/auth/hooks';
 
 import { UpgradeBlock } from './nav-upgrade';
 import { AccountButton } from './account-button';
 import { SignOutButton } from './sign-out-button';
-import {BaseOption} from "../../components/settings/drawer/base-option";
-import {useSettingsContext} from "../../components/settings/index";
+import { BaseOption } from '../../components/settings/drawer/base-option';
+import { useSettingsContext } from '../../components/settings/index';
 
 // ----------------------------------------------------------------------
 
@@ -40,6 +40,7 @@ export function AccountDrawer({ data = [], sx, ...other }) {
   const settings = useSettingsContext();
 
   const pathname = usePathname();
+  const { user: normUser } = useAuthContext();
 
   const { user } = useMockedUser();
 
@@ -82,7 +83,7 @@ export function AccountDrawer({ data = [], sx, ...other }) {
       <AccountButton
         onClick={handleOpenDrawer}
         photoURL={user?.photoURL}
-        displayName={user?.displayName}
+        displayName={normUser?.full_name}
         sx={sx}
         {...other}
       />
@@ -106,11 +107,11 @@ export function AccountDrawer({ data = [], sx, ...other }) {
             {renderAvatar}
 
             <Typography variant="subtitle1" noWrap sx={{ mt: 2 }}>
-              {user?.displayName}
+              {normUser?.full_name}
             </Typography>
 
             <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.5 }} noWrap>
-              {user?.email}
+              {normUser?.email}
             </Typography>
           </Stack>
 

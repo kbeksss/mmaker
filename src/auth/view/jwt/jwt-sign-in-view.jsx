@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { GoogleLogin } from '@react-oauth/google';
 import Box from '@mui/material/Box';
+import { jwtDecode } from 'jwt-decode';
 import Link from '@mui/material/Link';
 import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
@@ -83,8 +84,9 @@ export function JwtSignInView() {
       if (!response) {
         return;
       }
-      await signInOAth({ token: response?.credential, name: 'some name' });
-      console.log('res', response);
+      const token = response.credential;
+      const decoded = jwtDecode(token);
+      await signInOAth({ token, name: decoded?.name });
       await checkUserSession?.();
       router.refresh();
     } catch (error) {
