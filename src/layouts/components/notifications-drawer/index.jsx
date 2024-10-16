@@ -25,9 +25,9 @@ import { NotificationItem } from './notification-item';
 // ----------------------------------------------------------------------
 
 const TABS = [
-  { value: 'all', label: 'All', count: 22 },
-  { value: 'unread', label: 'Unread', count: 12 },
-  { value: 'archived', label: 'Archived', count: 10 },
+  { value: 'all', label: 'All', count: 2 },
+  { value: 'unread', label: 'Unread', count: 2 },
+  { value: 'archived', label: 'Archived', count: 0 },
 ];
 
 // ----------------------------------------------------------------------

@@ -25,7 +25,7 @@ export function AuthProvider({ children }) {
 
         const res = await axios.get(endpoints.auth.me);
         const user = res.data;
-
+        // const user = { fullName: 'Some name' }; // todo: revert
         setState({ user: { ...user, accessToken }, loading: false });
       } else {
         setState({ user: null, loading: false });

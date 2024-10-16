@@ -6,11 +6,6 @@ import { Iconify } from 'src/components/iconify';
 
 export const _account = [
   {
-    label: 'Home',
-    href: '/',
-    icon: <Iconify icon="solar:home-angle-bold-duotone" />,
-  },
-  {
     label: 'Profile',
     href: '#',
     icon: (
@@ -28,14 +23,8 @@ export const _account = [
     ),
   },
   {
-    label: 'Projects',
-    href: '#',
-    icon: <Iconify icon="solar:notes-bold-duotone" />,
-    info: '3',
-  },
-  {
     label: 'Subscription',
-    href: '#',
+    href: '/pricing',
     icon: (
       <SvgIcon>
         <path
@@ -55,11 +44,6 @@ export const _account = [
         />
       </SvgIcon>
     ),
-  },
-  {
-    label: 'Security',
-    href: '#',
-    icon: <Iconify icon="solar:shield-keyhole-bold-duotone" />,
   },
   {
     label: 'Account settings',
