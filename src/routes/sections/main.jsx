@@ -9,6 +9,7 @@ import { SimpleLayout } from 'src/layouts/simple';
 // Error
 const Page404 = lazy(() => import('src/pages/error/404'));
 const PricingPage = lazy(() => import('src/pages/pricing'));
+const UserAccountPage = lazy(() => import('src/pages/account'));
 
 // ----------------------------------------------------------------------
 
@@ -25,6 +26,14 @@ export const mainRoutes = [
         element: (
           <SimpleLayout>
             <PricingPage />
+          </SimpleLayout>
+        ),
+      },
+      {
+        path: 'account',
+        element: (
+          <SimpleLayout>
+            <UserAccountPage />
           </SimpleLayout>
         ),
       },
