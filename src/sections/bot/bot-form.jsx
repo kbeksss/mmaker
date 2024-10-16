@@ -3,7 +3,7 @@ import { z as zod } from 'zod';
 import { Form, Field } from 'src/components/hook-form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Card, CardHeader, Grid, MenuItem, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, CardHeader, Grid, MenuItem, Stack, Typography } from '@mui/material';
 import axios from 'axios';
 
 export const BotSchema = zod
@@ -103,12 +103,10 @@ const BotForm = () => {
               }}
               renderOption={(props, option) => (
                 <li {...props} key={option.id}>
-                  <Stack direction="row" justifyContent="space-between">
-                    <Typography>
-                      {option.label} {option.percent}
-                    </Typography>
+                  <Stack direction="row" spacing={1} justifyContent="space-between">
+                    <Typography>{option.label}</Typography>
                     <Typography color={option.percent >= 0 ? 'primary.main' : 'error'}>
-                      %
+                      {option.percent} %
                     </Typography>
                   </Stack>
                 </li>
@@ -146,6 +144,22 @@ const BotForm = () => {
               </Grid>
               <Grid item xs={6}>
                 <Field.Text name="minSpread" type="number" label="Min Spread BPS:" />
+              </Grid>
+            </Grid>
+          </Box>
+        </Card>
+        <Card>
+          <Box sx={{ p: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <Button fullWidth variant="contained" color="primary">
+                  Start bot
+                </Button>
+              </Grid>
+              <Grid item xs={6}>
+                <Button fullWidth variant="contained" color="error">
+                  Stop bot
+                </Button>
               </Grid>
             </Grid>
           </Box>
