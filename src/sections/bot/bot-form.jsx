@@ -1,14 +1,13 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import { z as zod } from 'zod';
 import { Form, Field } from 'src/components/hook-form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Card, CardHeader, Grid, MenuItem, Stack } from '@mui/material';
+import { Box, Card, CardHeader, Grid, MenuItem, Stack, Typography } from '@mui/material';
 import axios from 'axios';
 
 export const BotSchema = zod
   .object({
-    secretKey: zod.string(),
     symbol: zod.string({ required_error: 'Symbol is required!' }),
     buyDepth: zod.number(),
     sellDepth: zod.number(),
@@ -26,22 +25,32 @@ export const BotSchema = zod
     symbol: true,
   });
 
+const AutoCompleteItem = memo(({ children, ...props }) => (
+  <li {...props}>
+    <Stack direction="row" justifyContent="space-between">
+      <Typography>{children}</Typography>
+      <Typography>%</Typography>
+    </Stack>
+  </li>
+));
+
 const getFromBinance = async () => {
   const { data } = await axios.get('https://api.binance.com/api/v3/ticker/24hr');
   return data.map((pair) => {
     const symbol = pair.symbol;
     const priceChangePercent = parseFloat(pair.priceChangePercent);
-    const baseAsset = symbol.slice(0, -4);
-    const quoteAsset = symbol.slice(-4);
-    const formattedSymbol = `${baseAsset}/${quoteAsset}`;
-    return `${formattedSymbol}: ${priceChangePercent.toFixed(2)}%`;
+    const obj = {
+      label: symbol,
+      id: symbol,
+      percent: priceChangePercent.toFixed(2),
+    };
+    return obj;
   });
 };
 
 const BotForm = () => {
   const defaultValues = useMemo(
     () => ({
-      secretKey: '',
       symbol: '',
       buyDepth: undefined,
       sellDepth: undefined,
@@ -85,14 +94,23 @@ const BotForm = () => {
         <Card>
           <CardHeader title="Keys" />
           <Stack spacing={3} sx={{ p: 3 }}>
-            <Field.Text name="secretKey" label="Secret key" />
             <Field.Autocomplete
               name="symbol"
               label="Symbol (e.g., BTCUSDT):"
               options={symbols}
+              onChange={(event, value) => {
+                setValue('symbol', value ? value.label : '');
+              }}
               renderOption={(props, option) => (
-                <li {...props} key={option}>
-                  {option}
+                <li {...props} key={option.id}>
+                  <Stack direction="row" justifyContent="space-between">
+                    <Typography>
+                      {option.label} {option.percent}
+                    </Typography>
+                    <Typography color={option.percent >= 0 ? 'primary.main' : 'error'}>
+                      %
+                    </Typography>
+                  </Stack>
                 </li>
               )}
             />
