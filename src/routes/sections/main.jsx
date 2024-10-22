@@ -3,6 +3,8 @@ import { Outlet } from 'react-router-dom';
 
 import { SplashScreen } from 'src/components/loading-screen';
 import { SimpleLayout } from 'src/layouts/simple';
+import { CONFIG } from '../../config-global';
+import { AuthGuard } from '../../auth/guard/index';
 
 // ----------------------------------------------------------------------
 
@@ -12,14 +14,15 @@ const PricingPage = lazy(() => import('src/pages/pricing'));
 const UserAccountPage = lazy(() => import('src/pages/account'));
 
 // ----------------------------------------------------------------------
+const layoutContent = (
+  <Suspense fallback={<SplashScreen />}>
+    <Outlet />
+  </Suspense>
+);
 
 export const mainRoutes = [
   {
-    element: (
-      <Suspense fallback={<SplashScreen />}>
-        <Outlet />
-      </Suspense>
-    ),
+    element: CONFIG.auth.skip ? <>{layoutContent}</> : <AuthGuard>{layoutContent}</AuthGuard>,
     children: [
       {
         path: 'pricing',

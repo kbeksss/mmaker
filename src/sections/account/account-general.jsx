@@ -15,6 +15,7 @@ import { fData } from 'src/utils/format-number';
 import { toast } from 'src/components/snackbar';
 import { Form, Field, schemaHelper } from 'src/components/hook-form';
 import { useAuthContext, useMockedUser } from 'src/auth/hooks';
+import axios, { endpoints } from 'src/utils/axios';
 
 // ----------------------------------------------------------------------
 
@@ -56,6 +57,7 @@ export function AccountGeneral() {
     about: user?.about || '',
     isPublic: user?.isPublic || false,
   };
+  console.log('me', me);
 
   const methods = useForm({
     mode: 'all',
@@ -70,6 +72,10 @@ export function AccountGeneral() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
+      const { data: resData } = await axios.patch(
+        `${endpoints.user.email}?new_email=${data.email}`
+      );
+      console.log('res', resData);
       await new Promise((resolve) => setTimeout(resolve, 500));
       toast.success('Update success!');
       console.info('DATA', data);
@@ -135,7 +141,7 @@ export function AccountGeneral() {
               }}
             >
               <Field.Text name="full_name" label="Name" />
-              <Field.Text name="email" label="Email address" />
+              <Field.Text name="email" type="email" label="Email address" />
               <Field.Phone name="phoneNumber" label="Phone number" />
               <Field.Text name="address" label="Address" />
 

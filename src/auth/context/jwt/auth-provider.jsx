@@ -23,7 +23,7 @@ export function AuthProvider({ children }) {
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken);
 
-        const res = await axios.get(endpoints.auth.me);
+        const res = await axios.get(endpoints.user.me);
         const user = res.data;
         // const user = { fullName: 'Some name' }; // todo: revert
         setState({ user: { ...user, accessToken }, loading: false });
