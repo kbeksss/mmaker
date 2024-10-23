@@ -79,9 +79,9 @@ export function AccountBillingPlan({ cardList, addressBook, plans }) {
           </Label>
         )}
 
-        {plan.subscription === 'basic' && <PlanFreeIcon />}
-        {plan.subscription === 'starter' && <PlanStarterIcon />}
-        {plan.subscription === 'premium' && <PlanPremiumIcon />}
+        {plan.subscription === 'liquidity' && <PlanFreeIcon />}
+        {plan.subscription === 'distribution' && <PlanStarterIcon />}
+        {plan.subscription === 'balancer' && <PlanPremiumIcon />}
 
         <Box
           sx={{
@@ -91,7 +91,7 @@ export function AccountBillingPlan({ cardList, addressBook, plans }) {
             textTransform: 'capitalize',
           }}
         >
-          {plan.subscription}
+          {plan.label}
         </Box>
 
         <Stack direction="row" alignItems="center" sx={{ typography: 'h4' }}>

@@ -119,9 +119,9 @@ export const _userInvoices = [...Array(10)].map((_, index) => ({
 }));
 
 export const _userPlans = [
-  { subscription: 'basic', price: 0, primary: false },
-  { subscription: 'starter', price: 4.99, primary: true },
-  { subscription: 'premium', price: 9.99, primary: false },
+  { subscription: 'liquidity', label: 'Liquidity Bot', price: 89, primary: false },
+  { subscription: 'distribution', label: 'Distribution Bot', price: 144, primary: true },
+  { subscription: 'balancer', label: 'Balancer Bot', price: 233, primary: false },
 ];
 
 export const _userList = [...Array(20)].map((_, index) => ({
