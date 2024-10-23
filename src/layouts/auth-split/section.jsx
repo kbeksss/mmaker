@@ -2,9 +2,14 @@ import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Tooltip from '@mui/material/Tooltip';
 import { useTheme } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
+import { Stack, Typography } from '@mui/material';
+import TelegramIcon from '@mui/icons-material/Telegram';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import Lottie from 'react-lottie-player';
 
 import { RouterLink } from 'src/routes/components';
+import signInLottie from 'src/assets/lotties/sign-in.json';
 
 import { CONFIG } from 'src/config-global';
 import { varAlpha, bgGradient } from 'src/theme/styles';
@@ -15,9 +20,10 @@ export function Section({
   sx,
   method,
   layoutQuery,
+  imgUrl = `${CONFIG.assetsDir}/assets/illustrations/illustration-dashboard.webp`,
   methods,
   title = 'Manage the job',
-  imgUrl = `${CONFIG.assetsDir}/assets/illustrations/illustration-dashboard.webp`,
+  lottyJson = signInLottie,
   subtitle = 'Your gateway to smarter and more profitable trades.',
   ...other
 }) {
@@ -63,13 +69,29 @@ export function Section({
         )}
       </div>
 
-      <Box
-        component="img"
-        alt="Dashboard illustration"
-        src={imgUrl}
-        sx={{ width: 1, aspectRatio: '4/3', objectFit: 'cover' }}
-      />
+      <Lottie loop animationData={lottyJson} play style={{ height: 300 }} />
 
+      <Stack alignItems="center" spacing={1}>
+        <Box>
+          <Typography>Contact us</Typography>
+        </Box>
+        <Stack direction="row" spacing={1}>
+          <Typography color="text.secondary" variant="body2">
+            Support
+          </Typography>
+          <Typography color="text.secondary" variant="body2">
+            Feature
+          </Typography>
+          <Typography color="text.secondary" variant="body2">
+            Request
+          </Typography>
+        </Stack>
+        <Stack direction="row" spacing={1}>
+          <TwitterIcon />
+          <TelegramIcon />
+          <LinkedInIcon />
+        </Stack>
+      </Stack>
       {!!methods?.length && method && (
         <Box component="ul" gap={2} display="flex">
           {methods.map((option) => {
