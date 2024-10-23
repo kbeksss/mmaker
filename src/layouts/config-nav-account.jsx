@@ -7,7 +7,7 @@ import { Iconify } from 'src/components/iconify';
 export const _account = [
   {
     label: 'Profile',
-    href: '#',
+    href: '/account',
     icon: (
       <SvgIcon>
         <path

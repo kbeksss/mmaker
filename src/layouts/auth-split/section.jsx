@@ -13,6 +13,7 @@ import signInLottie from 'src/assets/lotties/sign-in.json';
 
 import { CONFIG } from 'src/config-global';
 import { varAlpha, bgGradient } from 'src/theme/styles';
+import { Logo } from 'src/components/logo';
 
 // ----------------------------------------------------------------------
 
@@ -58,6 +59,9 @@ export function Section({
       {...other}
     >
       <div>
+        <Stack direction="row" justifyContent="center">
+          <Logo width={300} height={100} />
+        </Stack>
         <Typography variant="h3" sx={{ textAlign: 'center' }}>
           {title}
         </Typography>

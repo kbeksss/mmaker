@@ -40,7 +40,6 @@ export function AuthSplitLayout({ sx, section, children, header }) {
             leftArea: (
               <>
                 {/* -- Logo -- */}
-                <Logo />
               </>
             ),
             rightArea: (

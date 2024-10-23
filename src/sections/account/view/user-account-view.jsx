@@ -16,6 +16,7 @@ import { AccountBilling } from '../account-billing';
 import { AccountSocialLinks } from '../account-social-links';
 import { AccountNotifications } from '../account-notifications';
 import { AccountChangePassword } from '../account-change-password';
+import { AccountExchange } from '../account-exchange';
 
 // ----------------------------------------------------------------------
 
@@ -26,6 +27,11 @@ const TABS = [
     value: 'notifications',
     label: 'Notifications',
     icon: <Iconify icon="solar:bell-bing-bold" width={24} />,
+  },
+  {
+    value: 'exchange',
+    label: 'Exchange',
+    icon: <Iconify icon="guidance:currency-exchange" width={24} />,
   },
   { value: 'social', label: 'Social links', icon: <Iconify icon="solar:share-bold" width={24} /> },
   { value: 'security', label: 'Security', icon: <Iconify icon="ic:round-vpn-key" width={24} /> },
@@ -60,6 +66,8 @@ export function AccountView() {
           addressBook={_userAddressBook}
         />
       )}
+
+      {tabs.value === 'exchange' && <AccountExchange />}
 
       {tabs.value === 'notifications' && <AccountNotifications />}
 
