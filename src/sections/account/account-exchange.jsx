@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Grid, Card, Stack, Typography, Box } from '@mui/material';
+import { Grid, Card, Stack, Typography, Box, Button } from '@mui/material';
 import Lottie from 'react-lottie-player';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z as zod } from 'zod';
@@ -18,43 +18,32 @@ export const KeysSchema = zod.object({
 
 export const StatusType = { active: 'active', paused: 'paused' };
 
-const exchangeList = [
-  { name: 'Binance', value: 'binance', icon: '/assets/images/exchange/binance.png' },
-  {
+const exchanges = {
+  binance: { name: 'Binance', value: 'binance', icon: '/assets/images/exchange/binance.png' },
+  coinbase: {
     name: 'Coinbase exchange',
     value: 'coinbase',
     icon: '/assets/images/exchange/coinbase.webp',
   },
-  {
+  bybit: {
     name: 'Bybit',
     value: 'bybit',
     icon: '/assets/images/exchange/bybit.png',
   },
-  {
+  okx: {
     name: 'OKX',
     value: 'okx',
     icon: '/assets/images/exchange/okx.png',
   },
-  {
+  upbit: {
     name: 'Upbit',
     value: 'upbit',
     icon: '/assets/images/exchange/upbit.png',
   },
-];
-
-export const tempData = [...Array(5)].map((_, index) => {
-  const exchangeName = ['Binance', 'Coinbase exchange', 'Bybit', 'OKX', 'Upbit'][index];
-  return {
-    id: _mock.id(index),
-    exchangeName,
-    date: '19 oct. 2024',
-    balance: _mock.number.price(index),
-    status: StatusType.active,
-    iconUrl: exchangeList[index].icon,
-  };
-});
+};
 
 export function AccountExchange() {
+  const [connectedList, setConnectedList] = useState({});
   const [selectedExchange, setSelectedExchange] = useState(null);
   const methods = useForm({
     resolver: zodResolver(KeysSchema),
@@ -64,37 +53,53 @@ export function AccountExchange() {
   const {
     handleSubmit,
     formState: { isSubmitting },
+    reset: resetForm,
   } = methods;
   const onSubmit = handleSubmit(async (data) => {
-    console.log('data', data);
+    const index = Math.floor(Math.random() * 10);
+    const connectedExchange = {
+      id: selectedExchange.value,
+      exchangeName: selectedExchange.name,
+      date: '19 oct. 2024',
+      balance: _mock.number.price(index),
+      status: StatusType.active,
+      iconUrl: selectedExchange.icon,
+    };
+    setConnectedList((prev) => ({ ...prev, [selectedExchange.value]: connectedExchange }));
+    setSelectedExchange(null);
+    resetForm();
   });
   return (
     <>
-      <Box sx={{ pb: 2 }}>
-        <AccountExchangeList
-          title="Connected Exchanges"
-          tableData={tempData}
-          headLabel={[
-            { id: 'exchangeName', label: 'Exchange' },
-            { id: 'date', label: 'Date of connection' },
-            { id: 'balance', label: 'Balance', align: 'center' },
-            { id: 'status', label: 'Status', align: 'right' },
-          ]}
-        />
+      <Box sx={{ pb: 4 }}>
+        {!!Object.keys(connectedList).length && (
+          <AccountExchangeList
+            title="Connected Exchanges"
+            tableData={Object?.values(connectedList)}
+            headLabel={[
+              { id: 'exchangeName', label: 'Exchange' },
+              { id: 'date', label: 'Date of connection' },
+              { id: 'balance', label: 'Balance', align: 'center' },
+              { id: 'status', label: 'Status', align: 'right' },
+            ]}
+          />
+        )}
       </Box>
       <Grid container spacing={3}>
         <Grid xs={12} md={4} item>
           <Typography sx={{ mb: 2 }}>Choose exchange</Typography>
           <Stack spacing={1}>
-            {exchangeList.map((exch) => (
-              <ExchangeCard
-                key={exch.value}
-                onCardClick={() => setSelectedExchange(exch)}
-                selected={selectedExchange?.value === exch.value}
-                name={exch.name}
-                img={exch.icon}
-              />
-            ))}
+            {Object.keys(exchanges)
+              .filter((exchKey) => !Object.prototype.hasOwnProperty.call(connectedList, exchKey))
+              .map((exchKey) => (
+                <ExchangeCard
+                  key={exchanges[exchKey].value}
+                  onCardClick={() => setSelectedExchange(exchanges[exchKey])}
+                  selected={selectedExchange?.value === exchanges[exchKey].value}
+                  name={exchanges[exchKey].name}
+                  img={exchanges[exchKey].icon}
+                />
+              ))}
           </Stack>
         </Grid>
         <Grid xs={12} md={8} item>
@@ -128,6 +133,13 @@ export function AccountExchange() {
                         <Field.Text label="Secret key" name="secretKey" />
                       </Grid>
                     </Grid>
+                    <Box sx={{ pt: 2 }}>
+                      <Stack direction="row" justifyContent="flex-end">
+                        <Button type="submit" color="primary" variant="contained">
+                          Save connection
+                        </Button>
+                      </Stack>
+                    </Box>
                   </Form>
                 </Box>
               </Box>
