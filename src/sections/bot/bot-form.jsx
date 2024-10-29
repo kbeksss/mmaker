@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Card, CardHeader, Grid, MenuItem, Stack, Typography } from '@mui/material';
 import axios from 'axios';
+import TradingViewWidget from 'src/components/trading-view';
 
 export const BotSchema = zod
   .object({
@@ -89,83 +90,96 @@ const BotForm = () => {
     }
   });
   return (
-    <Form methods={methods} onSubmit={onSubmit}>
-      <Stack spacing={{ xs: 1 }} sx={{ mx: 'auto', maxWidth: { xs: 720, xl: 880 } }}>
-        <Card>
-          <CardHeader title="Keys" />
-          <Stack spacing={3} sx={{ p: 3 }}>
-            <Field.Autocomplete
-              name="symbol"
-              label="Symbol (e.g., BTCUSDT):"
-              options={symbols}
-              onChange={(event, value) => {
-                setValue('symbol', value ? value.label : '');
-              }}
-              renderOption={(props, option) => (
-                <li {...props} key={option.id}>
-                  <Stack direction="row" spacing={1} justifyContent="space-between">
-                    <Typography>{option.label}</Typography>
-                    <Typography color={option.percent >= 0 ? 'primary.main' : 'error'}>
-                      {option.percent} %
-                    </Typography>
-                  </Stack>
-                </li>
-              )}
-            />
-          </Stack>
-        </Card>
-        <Grid container spacing={1}>
-          <Grid item xs={12} sm={6}>
-            <Card>
-              <CardHeader title="Buy Orders Configuration" />
-              <Stack spacing={3} sx={{ p: 3 }}>
-                <Field.Text name="buyDepth" type="number" label="Depth Percentage (Buy):" />
-                <Field.Text name="buyNumber" type="number" label="Number of Orders (Buy):" />
-                <Field.Text name="budgetQuote" type="number" label="Budget Quote:" />
-              </Stack>
-            </Card>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Card>
-              <CardHeader title="Sell Orders Configuration" />
-              <Stack spacing={3} sx={{ p: 3 }}>
-                <Field.Text name="sellDepth" type="number" label="Depth Percentage (Sell):" />
-                <Field.Text name="sellNumber" type="number" label="Number of Orders (Sell):" />
-                <Field.Text name="budgetToken" type="number" label="Budget Token:" />
-              </Stack>
-            </Card>
-          </Grid>
+    <>
+      <Grid container>
+        <Grid item xs={12} sm={5}>
+          <TradingViewWidget />
         </Grid>
-        <Card>
-          <Box sx={{ p: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <Field.Text name="maxSpread" type="number" label="Max Spread BPS:" />
+        <Grid item xs={12} sm={7}>
+          <Form methods={methods} onSubmit={onSubmit}>
+            <Stack spacing={{ xs: 1 }} sx={{ mx: 'auto', maxWidth: { xs: 720, xl: 880 } }}>
+              <Card>
+                <CardHeader title="Keys" />
+                <Stack spacing={3} sx={{ p: 3 }}>
+                  <Field.Autocomplete
+                    name="symbol"
+                    label="Symbol (e.g., BTCUSDT):"
+                    options={symbols}
+                    onChange={(event, value) => {
+                      setValue('symbol', value ? value.label : '');
+                    }}
+                    renderOption={(props, option) => (
+                      <li {...props} key={option.id}>
+                        <Stack direction="row" spacing={1} justifyContent="space-between">
+                          <Typography>{option.label}</Typography>
+                          <Typography color={option.percent >= 0 ? 'primary.main' : 'error'}>
+                            {option.percent} %
+                          </Typography>
+                        </Stack>
+                      </li>
+                    )}
+                  />
+                </Stack>
+              </Card>
+              <Grid container spacing={1}>
+                <Grid item xs={12} sm={6}>
+                  <Card>
+                    <CardHeader title="Buy Orders Configuration" />
+                    <Stack spacing={3} sx={{ p: 3 }}>
+                      <Field.Text name="buyDepth" type="number" label="Depth Percentage (Buy):" />
+                      <Field.Text name="buyNumber" type="number" label="Number of Orders (Buy):" />
+                      <Field.Text name="budgetQuote" type="number" label="Budget Quote:" />
+                    </Stack>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Card>
+                    <CardHeader title="Sell Orders Configuration" />
+                    <Stack spacing={3} sx={{ p: 3 }}>
+                      <Field.Text name="sellDepth" type="number" label="Depth Percentage (Sell):" />
+                      <Field.Text
+                        name="sellNumber"
+                        type="number"
+                        label="Number of Orders (Sell):"
+                      />
+                      <Field.Text name="budgetToken" type="number" label="Budget Token:" />
+                    </Stack>
+                  </Card>
+                </Grid>
               </Grid>
-              <Grid item xs={6}>
-                <Field.Text name="minSpread" type="number" label="Min Spread BPS:" />
-              </Grid>
-            </Grid>
-          </Box>
-        </Card>
-        <Card>
-          <Box sx={{ p: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <Button fullWidth variant="contained" color="primary">
-                  Start bot
-                </Button>
-              </Grid>
-              <Grid item xs={6}>
-                <Button fullWidth variant="contained" color="error">
-                  Stop bot
-                </Button>
-              </Grid>
-            </Grid>
-          </Box>
-        </Card>
-      </Stack>
-    </Form>
+              <Card>
+                <Box sx={{ p: 3 }}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      <Field.Text name="maxSpread" type="number" label="Max Spread BPS:" />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Field.Text name="minSpread" type="number" label="Min Spread BPS:" />
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Card>
+              <Card>
+                <Box sx={{ p: 3 }}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      <Button fullWidth variant="contained" color="primary">
+                        Start bot
+                      </Button>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Button fullWidth variant="contained" color="error">
+                        Stop bot
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Card>
+            </Stack>
+          </Form>
+        </Grid>
+      </Grid>
+    </>
   );
 };
 
