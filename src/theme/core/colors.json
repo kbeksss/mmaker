@@ -2,8 +2,8 @@
   "primary": {
     "lighter": "#C8FAD6",
     "light": "#5BE49B",
-    "main": "#00A76F",
-    "dark": "#007867",
+    "main": "#358DFF",
+    "dark": "#007aff",
     "darker": "#004B50",
     "contrastText": "#FFFFFF"
   },
