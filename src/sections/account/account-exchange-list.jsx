@@ -8,6 +8,7 @@ import {
   TableCell,
   TableBody,
   CardHeader,
+  Button,
 } from '@mui/material';
 
 import { Scrollbar } from 'src/components/scrollbar';
@@ -15,9 +16,25 @@ import { TableHeadCustom } from 'src/components/table';
 import { fCurrency } from 'src/utils/format-number';
 import { Label } from 'src/components/label';
 
-export const AccountExchangeList = ({ title, subheader, tableData, headLabel, ...other }) => (
+export const AccountExchangeList = ({
+  title,
+  subheader,
+  tableData,
+  headLabel,
+  onNewConnectionClick,
+  ...other
+}) => (
   <Card {...other}>
-    <CardHeader title={title} subheader={subheader} sx={{ mb: 3 }} />
+    <CardHeader
+      title={title}
+      subheader={subheader}
+      sx={{ mb: 3 }}
+      action={
+        <Button onClick={onNewConnectionClick} color="primary" variant="contained">
+          Add new connection
+        </Button>
+      }
+    />
 
     <Scrollbar>
       <Table sx={{ minWidth: 640 }}>

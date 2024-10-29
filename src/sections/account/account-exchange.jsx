@@ -10,6 +10,7 @@ import { Field, Form } from 'src/components/hook-form';
 import { _mock } from 'src/_mock';
 import ExchangeCard from './exchange-card';
 import { AccountExchangeList } from './account-exchange-list';
+import { AccountExchangeForm } from './account-exchange-form';
 
 export const KeysSchema = zod.object({
   apiKey: zod.string().min(1, { message: 'Api key is required!' }),
@@ -43,6 +44,8 @@ const exchanges = {
 };
 
 export function AccountExchange() {
+  const [formOpen, setFormOpen] = useState(false);
+
   const [connectedList, setConnectedList] = useState({});
   const [selectedExchange, setSelectedExchange] = useState(null);
   const methods = useForm({
@@ -66,14 +69,28 @@ export function AccountExchange() {
       iconUrl: selectedExchange.icon,
     };
     setConnectedList((prev) => ({ ...prev, [selectedExchange.value]: connectedExchange }));
+    setFormOpen(false);
     setSelectedExchange(null);
     resetForm();
   });
   return (
     <>
       <Box sx={{ pb: 4 }}>
-        {!!Object.keys(connectedList).length && (
+        {!Object.keys(connectedList).length ? (
+          <Card sx={{ p: 3, my: 2 }}>
+            <Typography>No connected exchanges</Typography>
+            <Button
+              sx={{ mt: 2 }}
+              onClick={() => setFormOpen(true)}
+              color="primary"
+              variant="contained"
+            >
+              Add new connection
+            </Button>
+          </Card>
+        ) : (
           <AccountExchangeList
+            onNewConnectionClick={() => setFormOpen(true)}
             title="Connected Exchanges"
             tableData={Object?.values(connectedList)}
             headLabel={[
@@ -85,68 +102,16 @@ export function AccountExchange() {
           />
         )}
       </Box>
-      <Grid container spacing={3}>
-        <Grid xs={12} md={4} item>
-          <Typography sx={{ mb: 2 }}>Choose exchange</Typography>
-          <Stack spacing={1}>
-            {Object.keys(exchanges)
-              .filter((exchKey) => !Object.prototype.hasOwnProperty.call(connectedList, exchKey))
-              .map((exchKey) => (
-                <ExchangeCard
-                  key={exchanges[exchKey].value}
-                  onCardClick={() => setSelectedExchange(exchanges[exchKey])}
-                  selected={selectedExchange?.value === exchanges[exchKey].value}
-                  name={exchanges[exchKey].name}
-                  img={exchanges[exchKey].icon}
-                />
-              ))}
-          </Stack>
-        </Grid>
-        <Grid xs={12} md={8} item>
-          <Card
-            sx={{
-              p: 3,
-            }}
-          >
-            {!selectedExchange ? (
-              <>
-                <Typography>Choose exchange</Typography>
-                <Lottie loop animationData={whaleLottie} play style={{ height: 300 }} />
-              </>
-            ) : (
-              <Box>
-                <Grid container justifyContent="center" spacing={3} alignItems="center">
-                  <Grid item>
-                    <img width={150} src={selectedExchange.icon} alt={selectedExchange.name} />
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="h2">{selectedExchange.name}</Typography>
-                  </Grid>
-                </Grid>
-                <Box sx={{ pt: 4 }}>
-                  <Form methods={methods} onSubmit={onSubmit}>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12} sm={6}>
-                        <Field.Text label="Api key" name="apiKey" />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Field.Text label="Secret key" name="secretKey" />
-                      </Grid>
-                    </Grid>
-                    <Box sx={{ pt: 2 }}>
-                      <Stack direction="row" justifyContent="flex-end">
-                        <Button type="submit" color="primary" variant="contained">
-                          Save connection
-                        </Button>
-                      </Stack>
-                    </Box>
-                  </Form>
-                </Box>
-              </Box>
-            )}
-          </Card>
-        </Grid>
-      </Grid>
+      <AccountExchangeForm
+        handleClose={() => setFormOpen(false)}
+        exchanges={exchanges}
+        connectedList={connectedList}
+        setSelectedExchange={setSelectedExchange}
+        formOpen={formOpen}
+        selectedExchange={selectedExchange}
+        methods={methods}
+        onSubmit={onSubmit}
+      />
     </>
   );
 }
