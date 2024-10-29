@@ -16,19 +16,18 @@ import { Iconify } from 'src/components/iconify';
 export function PricingCard({ card, sx, ...other }) {
   const { subscription, price, caption, lists, labelAction } = card;
 
-  const free = subscription === 'Free';
-  const essential = subscription === 'Essential';
+  const liquidity = subscription === 'Liquidity Bot';
+  const distribution = subscription === 'Distribution Bot';
   const expert = subscription === 'Expert';
-  const elite = subscription === 'Elite';
-  const ultimate = subscription === 'Ultimate';
+  const balancer = subscription === 'Balancer Bot';
 
   const renderIcon = (
     <Stack direction="row" alignItems="center" justifyContent="space-between">
-      {free && <PlanFreeIcon sx={{ width: 64 }} />}
-      {essential && <PlanStarterIcon sx={{ width: 64 }} />}
+      {liquidity && <PlanFreeIcon sx={{ width: 64 }} />}
+      {distribution && <PlanStarterIcon sx={{ width: 64 }} />}
       {expert && <PlanPremiumIcon sx={{ width: 64 }} />}
 
-      {essential && <Label color="info">POPULAR</Label>}
+      {distribution && <Label color="info">POPULAR</Label>}
     </Stack>
   );
 
@@ -41,9 +40,7 @@ export function PricingCard({ card, sx, ...other }) {
     </Stack>
   );
 
-  const renderPrice = free ? (
-    <Typography variant="h2">Free</Typography>
-  ) : (
+  const renderPrice = (
     <Stack direction="row">
       <Typography variant="h2">{price}</Typography>
       <Typography
@@ -94,11 +91,11 @@ export function PricingCard({ card, sx, ...other }) {
         borderRadius: 2,
         bgcolor: 'background.default',
         boxShadow: (theme) => ({ xs: theme.customShadows.card, md: 'none' }),
-        ...((free || essential) && {
+        ...((liquidity || distribution) && {
           borderTopRightRadius: { md: 0 },
           borderBottomRightRadius: { md: 0 },
         }),
-        ...((essential || expert) && {
+        ...((distribution || expert) && {
           boxShadow: (theme) => ({
             xs: theme.customShadows.card,
             md: `-40px 40px 80px 0px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.16)}`,
@@ -128,8 +125,8 @@ export function PricingCard({ card, sx, ...other }) {
         fullWidth
         size="large"
         variant="contained"
-        disabled={free}
-        color={essential ? 'primary' : 'inherit'}
+        disabled={liquidity}
+        color={distribution ? 'primary' : 'inherit'}
       >
         {labelAction}
       </Button>
