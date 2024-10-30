@@ -80,6 +80,8 @@ const BotForm = () => {
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
+  const symbol = watch('symbol');
+  console.log('symbol', symbol);
   const onSubmit = handleSubmit(async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -91,9 +93,9 @@ const BotForm = () => {
   });
   return (
     <>
-      <Grid container>
+      <Grid container spacing={2}>
         <Grid item xs={12} sm={5}>
-          <TradingViewWidget />
+          <TradingViewWidget symbol={symbol} />
         </Grid>
         <Grid item xs={12} sm={7}>
           <Form methods={methods} onSubmit={onSubmit}>
