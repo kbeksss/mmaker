@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Card, CardHeader, Grid, MenuItem, Stack, Typography } from '@mui/material';
 import axios from 'axios';
 import TradingViewWidget from 'src/components/trading-view';
+import { BotList } from './bot-list';
 
 export const BotSchema = zod
   .object({
@@ -64,6 +65,7 @@ const BotForm = () => {
     }),
     []
   );
+  const [isBotStarted, setIsBotStarted] = useState(false);
   const [symbols, setSymbols] = useState([]);
   useEffect(() => {
     getFromBinance().then((res) => setSymbols(res));
@@ -81,7 +83,6 @@ const BotForm = () => {
     formState: { isSubmitting },
   } = methods;
   const symbol = watch('symbol');
-  console.log('symbol', symbol);
   const onSubmit = handleSubmit(async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -94,10 +95,10 @@ const BotForm = () => {
   return (
     <>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={5}>
+        <Grid item xs={12} sm={6}>
           <TradingViewWidget symbol={symbol} />
         </Grid>
-        <Grid item xs={12} sm={7}>
+        <Grid item xs={12} sm={6}>
           <Form methods={methods} onSubmit={onSubmit}>
             <Stack spacing={{ xs: 1 }} sx={{ mx: 'auto', maxWidth: { xs: 720, xl: 880 } }}>
               <Card>
@@ -163,22 +164,21 @@ const BotForm = () => {
               </Card>
               <Card>
                 <Box sx={{ p: 3 }}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                      <Button fullWidth variant="contained" color="primary">
-                        Start bot
-                      </Button>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Button fullWidth variant="contained" color="error">
-                        Stop bot
-                      </Button>
-                    </Grid>
-                  </Grid>
+                  <Button
+                    onClick={() => setIsBotStarted((prev) => !prev)}
+                    fullWidth
+                    variant="contained"
+                    color={isBotStarted ? 'error' : 'primary'}
+                  >
+                    {isBotStarted ? 'Stop bot' : 'Start bot'}
+                  </Button>
                 </Box>
               </Card>
             </Stack>
           </Form>
+        </Grid>
+        <Grid item xs={12}>
+          <BotList />
         </Grid>
       </Grid>
     </>
