@@ -42,11 +42,9 @@ export function BotTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow
 
             <Stack sx={{ typography: 'body2', flex: '1 1 auto', alignItems: 'flex-start' }}>
               <Link color="inherit" onClick={onEditRow} sx={{ cursor: 'pointer' }}>
-                {row.name}
+                {row.exchangeName}
               </Link>
-              <Box component="span" sx={{ color: 'text.disabled' }}>
-                {row.email}
-              </Box>
+
             </Stack>
           </Stack>
         </TableCell>

@@ -24,8 +24,11 @@ const exchanges = {
   },
 };
 
-export const _botList = [...Array(5)].map((_, index) => ({
+const exchangesArray = Object.values(exchanges);
+
+export const _botList = exchangesArray.map((exchange, index) => ({
   id: _mock.id(index),
+  exchangeName: exchange.name,
   pair: 'ETHBTC',
   activeOrders: index,
   originalBudget: _mock.number.price(index),
@@ -34,6 +37,8 @@ export const _botList = [...Array(5)].map((_, index) => ({
   tradingVolume: _mock.number.percent(index),
   feesPaid: _mock.number.price(index + 3),
   pnl: _mock.number.price(index + 4),
+  avatarUrl: exchange.icon,
+
 
   zipCode: '85807',
   state: 'Virginia',
@@ -41,11 +46,9 @@ export const _botList = [...Array(5)].map((_, index) => ({
   role: _mock.role(index),
   email: _mock.email(index),
   address: '908 Jack Locks',
-  exchangeName: _mock.fullName(index),
   isVerified: _mock.boolean(index),
   company: _mock.companyNames(index),
   country: _mock.countryNames(index),
-  avatarUrl: _mock.image.avatar(index),
   phoneNumber: _mock.phoneNumber(index),
   status: (index % 2 && 'paused') || 'active',
 }));
