@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box } from '@mui/material';
-import { _botList } from 'src/_mock';
 import { BotTable } from './bot-table';
 
 export const BotStatuses = [
@@ -9,9 +8,14 @@ export const BotStatuses = [
   { value: 'paused', label: 'Paused' },
 ];
 
-export const BotList = () => (
+export const BotList = ({ tableHeads, botList, withBotTypes }) => (
   <Box>
-    <BotTable botList={_botList} statuses={BotStatuses} />
+    <BotTable
+      botList={botList}
+      tableHeads={tableHeads}
+      withBotTypes={withBotTypes}
+      statuses={BotStatuses}
+    />
   </Box>
 );
 

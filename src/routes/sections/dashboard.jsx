@@ -10,8 +10,8 @@ import { AuthGuard } from 'src/auth/guard';
 
 // ----------------------------------------------------------------------
 
-const IndexPage = lazy(() => import('src/pages/dashboard/one'));
-const BotPage = lazy(() => import('src/pages/dashboard/bot'));
+const IndexPage = lazy(() => import('src/pages/dashboard/allbots'));
+const BotPage = lazy(() => import('src/pages/dashboard/liquidity-bot'));
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +29,7 @@ export const dashboardRoutes = [
     element: CONFIG.auth.skip ? <>{layoutContent}</> : <AuthGuard>{layoutContent}</AuthGuard>,
     children: [
       { element: <IndexPage />, index: true },
-      { path: 'bot', element: <BotPage /> },
+      { path: 'liquidity', element: <BotPage /> },
     ],
   },
 ];

@@ -44,7 +44,6 @@ export function BotTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow
               <Link color="inherit" onClick={onEditRow} sx={{ cursor: 'pointer' }}>
                 {row.exchangeName}
               </Link>
-
             </Stack>
           </Stack>
         </TableCell>
@@ -59,7 +58,7 @@ export function BotTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.tradingVolume}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.feesPaid}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.pnl}</TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.role}</TableCell>
+        {row?.botType && <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.botType}</TableCell>}
 
         <TableCell>
           <Label

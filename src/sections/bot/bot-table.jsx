@@ -21,27 +21,14 @@ import { useRouter } from 'src/routes/hooks';
 import { paths } from 'src/routes/paths';
 import { useSetState } from 'src/hooks/use-set-state';
 import { ConfirmDialog } from 'src/components/custom-dialog';
+import { _bot_types } from 'src/_mock';
 
 import { BotTableRow } from './bot-table-row';
+import { BotTableToolbar } from './bot-table-toolbar';
+import { BotTableFiltersResult } from './bot-table-filters-result';
 
-const TABLE_HEAD = [
-  { id: 'exchangeName', label: 'Exchange' },
-  { id: 'pair', label: 'Pair',  },
-  { id: 'activeOrders', label: 'Active Orders' },
-  { id: 'originalBudget', label: 'Or. Budget', width: 80 },
-  { id: 'firstPairBalance', label: 'Balance (1)', width: 80 },
-  { id: 'secondPairBalance', label: 'Balance (2)', width: 80 },
-  { id: 'tradingVolume', label: 'Trading Volume', width: 80 },
-  { id: 'feesPaid', label: 'Fees Paid', width: 80 },
-  { id: 'pnl', label: 'PnL', width: 80 },
-
-  { id: 'role', label: 'Role', width: 180 },
-  { id: 'status', label: 'Status', width: 100 },
-  { id: '', width: 88 },
-];
-
-export const BotTable = ({ statuses, botList }) => {
-  const filters = useSetState({ botVariants: [], status: 'all' });
+export const BotTable = ({ statuses, botList, tableHeads, withBotTypes }) => {
+  const filters = useSetState({ botType: [], status: 'all' });
   const [tableData, setTableData] = useState(botList);
   const confirm = useBoolean();
   const router = useRouter();
@@ -56,7 +43,7 @@ export const BotTable = ({ statuses, botList }) => {
 
   const dataInPage = rowInPage(dataFiltered, table.page, table.rowsPerPage);
 
-  const canReset = filters.state.botVariants.length > 0 || filters.state.status !== 'all';
+  const canReset = filters.state.botType.length > 0 || filters.state.status !== 'all';
 
   const notFound = (!dataFiltered.length && canReset) || !dataFiltered.length;
 
@@ -139,6 +126,24 @@ export const BotTable = ({ statuses, botList }) => {
             />
           ))}
         </Tabs>
+        {withBotTypes && (
+          <>
+            <BotTableToolbar
+              filters={filters}
+              onResetPage={table.onResetPage}
+              options={{ botTypes: _bot_types }}
+            />
+          </>
+        )}
+        {canReset && (
+          <BotTableFiltersResult
+            filters={filters}
+            totalResults={dataFiltered.length}
+            onResetPage={table.onResetPage}
+            sx={{ p: 2.5, pt: 0 }}
+          />
+        )}
+
         <Box sx={{ position: 'relative' }}>
           <TableSelectedAction
             dense={table.dense}
@@ -163,7 +168,7 @@ export const BotTable = ({ statuses, botList }) => {
               <TableHeadCustom
                 order={table.order}
                 orderBy={table.orderBy}
-                headLabel={TABLE_HEAD}
+                headLabel={tableHeads}
                 rowCount={dataFiltered.length}
                 numSelected={table.selected.length}
                 onSort={table.onSort}
@@ -238,7 +243,7 @@ export const BotTable = ({ statuses, botList }) => {
 };
 
 function applyFilter({ inputData, comparator, filters }) {
-  const { status, botVariants } = filters;
+  const { status, botType } = filters;
 
   const stabilizedThis = inputData.map((el, index) => [el, index]);
 
@@ -254,8 +259,8 @@ function applyFilter({ inputData, comparator, filters }) {
     inputData = inputData.filter((user) => user.status === status);
   }
 
-  if (botVariants.length) {
-    inputData = inputData.filter((user) => botVariants.includes(user.role));
+  if (botType.length) {
+    inputData = inputData.filter((user) => botType.includes(user.botType));
   }
 
   return inputData;

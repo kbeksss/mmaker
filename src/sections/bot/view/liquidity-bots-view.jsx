@@ -1,12 +1,29 @@
+import { DashboardContent } from 'src/layouts/dashboard';
+import { Box, Button, Card, CardHeader, Grid, Stack, Typography } from '@mui/material';
+import TradingViewWidget from 'src/components/trading-view';
+import { Field, Form } from 'src/components/hook-form';
 import React, { memo, useEffect, useMemo, useState } from 'react';
-import { z as zod } from 'zod';
-import { Form, Field } from 'src/components/hook-form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Button, Card, CardHeader, Grid, MenuItem, Stack, Typography } from '@mui/material';
+import { z as zod } from 'zod';
 import axios from 'axios';
-import TradingViewWidget from 'src/components/trading-view';
-import { BotList } from './bot-list';
+import { _botList } from 'src/_mock';
+import { BotList } from '../bot-list';
+
+const TABLE_HEAD = [
+  { id: 'exchangeName', label: 'Exchange' },
+  { id: 'pair', label: 'Pair' },
+  { id: 'activeOrders', label: 'Active Orders' },
+  { id: 'originalBudget', label: 'Or. Budget', width: 80 },
+  { id: 'firstPairBalance', label: 'Balance (1)', width: 80 },
+  { id: 'secondPairBalance', label: 'Balance (2)', width: 80 },
+  { id: 'tradingVolume', label: 'Trading Volume', width: 80 },
+  { id: 'feesPaid', label: 'Fees Paid', width: 80 },
+  { id: 'pnl', label: 'PnL', width: 80 },
+
+  { id: 'status', label: 'Status', width: 100 },
+  { id: '', width: 88 },
+];
 
 export const BotSchema = zod
   .object({
@@ -50,7 +67,7 @@ const getFromBinance = async () => {
   });
 };
 
-const BotForm = () => {
+export function LiquidityBotsView({ tour }) {
   const defaultValues = useMemo(
     () => ({
       symbol: '',
@@ -93,7 +110,7 @@ const BotForm = () => {
     }
   });
   return (
-    <>
+    <DashboardContent>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <TradingViewWidget symbol={symbol} />
@@ -178,11 +195,9 @@ const BotForm = () => {
           </Form>
         </Grid>
         <Grid item xs={12}>
-          <BotList />
+          <BotList botList={_botList} tableHeads={TABLE_HEAD} />
         </Grid>
       </Grid>
-    </>
+    </DashboardContent>
   );
-};
-
-export default BotForm;
+}

@@ -43,6 +43,6 @@ export const paths = {
   // DASHBOARD
   dashboard: {
     root: ROOTS.DASHBOARD,
-    bot: `${ROOTS.DASHBOARD}/bot`,
+    liquidityBots: `${ROOTS.DASHBOARD}/liquidity`,
   },
 };
