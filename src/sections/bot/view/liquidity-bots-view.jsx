@@ -195,7 +195,7 @@ export function LiquidityBotsView({ tour }) {
           </Form>
         </Grid>
         <Grid item xs={12}>
-          <BotList botList={_botList} tableHeads={TABLE_HEAD} />
+          <BotList botList={_botList} cardHeader='Liquidity bots' tableHeads={TABLE_HEAD} />
         </Grid>
       </Grid>
     </DashboardContent>

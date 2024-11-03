@@ -1,6 +1,18 @@
 import React, { useCallback, useState } from 'react';
-import { Card, Tabs, Tab, Box, Tooltip, IconButton, Table, TableBody, Button } from '@mui/material';
+import {
+  Card,
+  Tabs,
+  Tab,
+  Box,
+  Tooltip,
+  IconButton,
+  Table,
+  TableBody,
+  Button,
+  CardHeader,
+} from '@mui/material';
 import { varAlpha } from 'src/theme/styles';
+
 import {
   emptyRows,
   getComparator,
@@ -27,7 +39,7 @@ import { BotTableRow } from './bot-table-row';
 import { BotTableToolbar } from './bot-table-toolbar';
 import { BotTableFiltersResult } from './bot-table-filters-result';
 
-export const BotTable = ({ statuses, botList, tableHeads, withBotTypes }) => {
+export const BotTable = ({ statuses, botList, tableHeads, withBotTypes, cardHeader, action }) => {
   const filters = useSetState({ botType: [], status: 'all' });
   const [tableData, setTableData] = useState(botList);
   const confirm = useBoolean();
@@ -91,6 +103,8 @@ export const BotTable = ({ statuses, botList, tableHeads, withBotTypes }) => {
   return (
     <>
       <Card>
+        {cardHeader && <CardHeader title={cardHeader} sx={{ mb: 3 }} action={action} />}
+
         <Tabs
           value={filters.state.status}
           onChange={handleFilterStatus}
