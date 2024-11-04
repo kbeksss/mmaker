@@ -35,6 +35,7 @@ const ICONS = {
   analytics: icon('ic-analytics'),
   dashboard: icon('ic-dashboard'),
   parameter: icon('ic-parameter'),
+  exchanges: icon('ic-exchange')
 };
 
 // ----------------------------------------------------------------------
@@ -51,6 +52,10 @@ export const navData = [
       { title: 'Distribution Bot', path: paths.dashboard.distribution, icon: ICONS.analytics },
       { title: 'Balancer Bot', path: paths.dashboard.balancer, icon: ICONS.analytics },
     ],
+  },
+  {
+    subheader: 'Account',
+    items: [{ title: 'Exchanges', path: paths.account.exchanges, icon: ICONS.exchanges }],
   },
   /**
    * Management

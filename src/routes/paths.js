@@ -3,6 +3,7 @@
 const ROOTS = {
   AUTH: '/auth',
   DASHBOARD: '/dashboard',
+  ACCOUNT: '/account',
 };
 
 // ----------------------------------------------------------------------
@@ -46,5 +47,9 @@ export const paths = {
     liquidity: `${ROOTS.DASHBOARD}/liquidity`,
     distribution: `${ROOTS.DASHBOARD}/distribution`,
     balancer: `${ROOTS.DASHBOARD}/balancer`,
+  },
+  account: {
+    root: ROOTS.ACCOUNT,
+    exchanges: `${ROOTS.ACCOUNT}/exchanges`,
   },
 };
