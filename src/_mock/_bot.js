@@ -1,7 +1,7 @@
 import { _mock } from './_mock';
 import { _bot_types } from './assets';
 
-const exchanges = {
+export const _exchanges = {
   binance: { name: 'Binance', value: 'binance', icon: '/assets/images/exchange/binance.png' },
   coinbase: {
     name: 'Coinbase exchange',
@@ -25,7 +25,7 @@ const exchanges = {
   },
 };
 
-const exchangesArray = Object.values(exchanges);
+const exchangesArray = Object.values(_exchanges);
 
 export const _botList = exchangesArray.map((exchange, index) => ({
   id: _mock.id(index),

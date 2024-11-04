@@ -141,13 +141,11 @@ export const BotTable = ({ statuses, botList, tableHeads, withBotTypes, cardHead
           ))}
         </Tabs>
         {withBotTypes && (
-          <>
-            <BotTableToolbar
-              filters={filters}
-              onResetPage={table.onResetPage}
-              options={{ botTypes: Object.values(_bot_types) }}
-            />
-          </>
+          <BotTableToolbar
+            filters={filters}
+            onResetPage={table.onResetPage}
+            options={{ botTypes: Object.values(_bot_types) }}
+          />
         )}
         {canReset && (
           <BotTableFiltersResult

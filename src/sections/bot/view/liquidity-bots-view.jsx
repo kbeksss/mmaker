@@ -1,15 +1,16 @@
 import { useSearchParams } from 'react-router-dom';
-import { Box, Button, Card, CardHeader, Grid, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, CardHeader, MenuItem, Grid, Stack, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 import { z as zod } from 'zod';
 
 import { DashboardContent } from 'src/layouts/dashboard';
 import TradingViewWidget from 'src/components/trading-view';
 import { Field, Form } from 'src/components/hook-form';
-import React, { memo, useEffect, useMemo, useState } from 'react';
-import { _botList } from 'src/_mock';
+import { _botList, _exchanges } from 'src/_mock';
+
 import { BotList } from '../bot-list';
 
 const TABLE_HEAD = [
@@ -29,6 +30,7 @@ const TABLE_HEAD = [
 
 export const BotSchema = zod
   .object({
+    exchange: zod.string({ required_error: 'Symbol is required!' }),
     symbol: zod.string({ required_error: 'Symbol is required!' }),
     buyDepth: zod.number(),
     sellDepth: zod.number(),
@@ -70,6 +72,7 @@ const getFromBinance = async () => {
 };
 
 const tempEditValues = {
+  exchange: 'binance',
   symbol: 'BTCUSDT',
   buyDepth: 10,
   sellDepth: 10,
@@ -82,6 +85,7 @@ const tempEditValues = {
 };
 
 const emptyDefaultValues = {
+  exchange: '',
   symbol: '',
   buyDepth: 0,
   sellDepth: 0,
@@ -149,24 +153,13 @@ export function LiquidityBotsView() {
               <Card>
                 <CardHeader title="Exchange" />
                 <Stack spacing={3} sx={{ p: 3 }}>
-                  <Field.Autocomplete
-                    name="symbol"
-                    label="Symbol (e.g., BTCUSDT):"
-                    options={symbols}
-                    onChange={(event, value) => {
-                      setValue('symbol', value ? value.label : '');
-                    }}
-                    renderOption={(props, option) => (
-                      <li {...props} key={option.id}>
-                        <Stack direction="row" spacing={1} justifyContent="space-between">
-                          <Typography>{option.label}</Typography>
-                          <Typography color={option.percent >= 0 ? 'primary.main' : 'error'}>
-                            {option.percent} %
-                          </Typography>
-                        </Stack>
-                      </li>
-                    )}
-                  />
+                  <Field.Select name="exchange" label="Exchange">
+                    {Object.keys(_exchanges).map((key) => (
+                      <MenuItem key={key} value={key}>
+                        {_exchanges[key].name}
+                      </MenuItem>
+                    ))}
+                  </Field.Select>
                 </Stack>
               </Card>
               <Card>
