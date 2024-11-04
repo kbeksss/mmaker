@@ -51,11 +51,8 @@ export const navData = [
       { title: 'Liquidity Bot', path: paths.dashboard.liquidity, icon: ICONS.analytics },
       { title: 'Distribution Bot', path: paths.dashboard.distribution, icon: ICONS.analytics },
       { title: 'Balancer Bot', path: paths.dashboard.balancer, icon: ICONS.analytics },
+      { title: 'Exchanges', path: paths.dashboard.exchanges, icon: ICONS.exchanges }
     ],
-  },
-  {
-    subheader: 'Account',
-    items: [{ title: 'Exchanges', path: paths.account.exchanges, icon: ICONS.exchanges }],
   },
   /**
    * Management

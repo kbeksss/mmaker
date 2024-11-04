@@ -47,9 +47,9 @@ export const paths = {
     liquidity: `${ROOTS.DASHBOARD}/liquidity`,
     distribution: `${ROOTS.DASHBOARD}/distribution`,
     balancer: `${ROOTS.DASHBOARD}/balancer`,
+    exchanges: `${ROOTS.DASHBOARD}/exchanges`,
   },
   account: {
     root: ROOTS.ACCOUNT,
-    exchanges: `${ROOTS.ACCOUNT}/exchanges`,
   },
 };

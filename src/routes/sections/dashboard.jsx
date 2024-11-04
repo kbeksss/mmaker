@@ -14,6 +14,7 @@ const IndexPage = lazy(() => import('src/pages/dashboard/allbots'));
 const LiquidityPage = lazy(() => import('src/pages/dashboard/liquidity-bot'));
 const DistributionPage = lazy(() => import('src/pages/dashboard/distribution-bot'));
 const BalancerPage = lazy(() => import('src/pages/dashboard/balancer-bot'));
+const ExchangePage = lazy(() => import('src/pages/dashboard/exchange'));
 
 // ----------------------------------------------------------------------
 
@@ -34,6 +35,7 @@ export const dashboardRoutes = [
       { path: 'liquidity', element: <LiquidityPage /> },
       { path: 'distribution', element: <DistributionPage /> },
       { path: 'balancer', element: <BalancerPage /> },
+      { path: 'exchanges', element: <ExchangePage /> },
     ],
   },
 ];
