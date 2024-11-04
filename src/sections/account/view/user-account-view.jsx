@@ -13,7 +13,6 @@ import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
 import { AccountGeneral } from '../account-general';
 import { AccountBilling } from '../account-billing';
-import { AccountSocialLinks } from '../account-social-links';
 import { AccountNotifications } from '../account-notifications';
 import { AccountChangePassword } from '../account-change-password';
 
@@ -27,7 +26,6 @@ const TABS = [
     label: 'Notifications',
     icon: <Iconify icon="solar:bell-bing-bold" width={24} />,
   },
-  { value: 'social', label: 'Social links', icon: <Iconify icon="solar:share-bold" width={24} /> },
   { value: 'security', label: 'Security', icon: <Iconify icon="ic:round-vpn-key" width={24} /> },
 ];
 
@@ -62,8 +60,6 @@ export function AccountView() {
       )}
 
       {tabs.value === 'notifications' && <AccountNotifications />}
-
-      {tabs.value === 'social' && <AccountSocialLinks socialLinks={_userAbout.socialLinks} />}
 
       {tabs.value === 'security' && <AccountChangePassword />}
     </DashboardContent>

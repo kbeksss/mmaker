@@ -52,16 +52,18 @@ export const _contacts = [...Array(20)].map((_, index) => {
 
 // ----------------------------------------------------------------------
 
-export const _notifications = [...Array(2)].map((_, index) => ({
+export const _notifications = [...Array(4)].map((_, index) => ({
   id: _mock.id(index),
   avatarUrl: [null, null, null, null, null][index],
-  type: ['mail', 'chat'][index],
+  type: ['mail', 'chat', 'chat', 'chat'][index],
   category: ['Communication', 'Communication'][index],
   isUnRead: _mock.boolean(index),
   createdAt: _mock.time(index),
   title:
     (index === 0 && `<p>You have new message 5 unread messages</p>`) ||
-    (index === 1 && `<p>Start your first bot</p>`) ||
+    (index === 1 && `<p>Some bot update 2</p>`) ||
+    (index === 2 && `<p>Some bot update 1</p>`) ||
+    (index === 3 && `<p>Start your first bot</p>`) ||
     '',
 }));
 

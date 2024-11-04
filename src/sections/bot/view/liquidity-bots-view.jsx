@@ -147,6 +147,29 @@ export function LiquidityBotsView() {
           <Form methods={methods} onSubmit={onSubmit}>
             <Stack spacing={{ xs: 1 }} sx={{ mx: 'auto', maxWidth: { xs: 720, xl: 880 } }}>
               <Card>
+                <CardHeader title="Exchange" />
+                <Stack spacing={3} sx={{ p: 3 }}>
+                  <Field.Autocomplete
+                    name="symbol"
+                    label="Symbol (e.g., BTCUSDT):"
+                    options={symbols}
+                    onChange={(event, value) => {
+                      setValue('symbol', value ? value.label : '');
+                    }}
+                    renderOption={(props, option) => (
+                      <li {...props} key={option.id}>
+                        <Stack direction="row" spacing={1} justifyContent="space-between">
+                          <Typography>{option.label}</Typography>
+                          <Typography color={option.percent >= 0 ? 'primary.main' : 'error'}>
+                            {option.percent} %
+                          </Typography>
+                        </Stack>
+                      </li>
+                    )}
+                  />
+                </Stack>
+              </Card>
+              <Card>
                 <CardHeader title="Pairs" />
                 <Stack spacing={3} sx={{ p: 3 }}>
                   <Field.Autocomplete

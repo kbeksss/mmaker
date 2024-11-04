@@ -27,6 +27,7 @@ const NOTIFICATIONS = [
     subheader: 'Application',
     caption: 'Donec mi odio, faucibus at, scelerisque quis',
     items: [
+      { id: 'application_bot', label: 'Bot event updates' },
       { id: 'application_news', label: 'News and announcements' },
       { id: 'application_product', label: 'Weekly product updates' },
       { id: 'application_blog', label: 'Weekly blog digest' },
@@ -38,7 +39,7 @@ const NOTIFICATIONS = [
 
 export function AccountNotifications() {
   const methods = useForm({
-    defaultValues: { selected: ['activity_comments', 'application_product'] },
+    defaultValues: { selected: ['application_bot'] },
   });
 
   const {
