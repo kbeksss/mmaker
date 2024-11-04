@@ -38,7 +38,6 @@ export function AccountGeneral() {
     full_name: me?.full_name || '',
     email: me?.email || '',
     photoURL: user?.photoURL || null,
-    phoneNumber: user?.phoneNumber || '',
   };
   const methods = useForm({
     mode: 'all',
@@ -116,7 +115,6 @@ export function AccountGeneral() {
             >
               <Field.Text name="full_name" label="Name" />
               <Field.Text name="email" type="email" label="Email address" />
-              <Field.Phone name="phoneNumber" label="Phone number" />
             </Box>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
