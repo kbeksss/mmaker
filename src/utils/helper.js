@@ -100,6 +100,10 @@ export function isEqual(a, b) {
   return false;
 }
 
+export function getKeyByValue(object, value) {
+  return Object.keys(object).find(key => object[key] === value);
+}
+
 // ----------------------------------------------------------------------
 
 function isObject(item) {

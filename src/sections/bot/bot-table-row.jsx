@@ -18,16 +18,32 @@ import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import { usePopover, CustomPopover } from 'src/components/custom-popover';
+import { getKeyByValue } from 'src/utils/helper';
+import { _bot_types } from 'src/_mock';
+import { useRouter } from 'src/routes/hooks';
 import { BotQuickEditForm } from './bot-quick-edit-form';
 
 // ----------------------------------------------------------------------
 
 export function BotTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow }) {
   const confirm = useBoolean();
+  const router = useRouter();
 
   const popover = usePopover();
 
   const quickEdit = useBoolean();
+  const onEdit = () => {
+    const typeKey = getKeyByValue(_bot_types, row.botType);
+    if (typeKey) {
+      router.replace(`/dashboard/${typeKey}?id=${row.id}`);
+    } else {
+      router.push(`?id=${row.id}`);
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+  };
 
   return (
     <>
@@ -77,10 +93,7 @@ export function BotTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow
         <TableCell>
           <Stack direction="row" alignItems="center">
             <Tooltip title="Quick Edit" placement="top" arrow>
-              <IconButton
-                color={quickEdit.value ? 'inherit' : 'default'}
-                onClick={quickEdit.onTrue}
-              >
+              <IconButton color="default" onClick={onEdit}>
                 <Iconify icon="solar:pen-bold" />
               </IconButton>
             </Tooltip>

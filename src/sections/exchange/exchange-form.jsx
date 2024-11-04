@@ -41,7 +41,7 @@ export const ExchangeForm = ({
     >
       <CloseIcon />
     </IconButton>
-    <DialogContent sx={{pb: 2}}>
+    <DialogContent sx={{ pb: 2 }}>
       <Grid container spacing={3}>
         <Grid xs={12} md={4} item>
           <Stack spacing={1}>
@@ -71,14 +71,11 @@ export const ExchangeForm = ({
               </>
             ) : (
               <Box>
-                <Grid container justifyContent="center" spacing={3} alignItems="center">
-                  <Grid item>
-                    <img width={150} src={selectedExchange.icon} alt={selectedExchange.name} />
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="h2">{selectedExchange.name}</Typography>
-                  </Grid>
-                </Grid>
+                <Stack alignItems="center">
+                  <img width={150} src={selectedExchange.icon} alt={selectedExchange.name} />
+                  <Typography variant="h2">{selectedExchange.name}</Typography>
+                </Stack>
+
                 <Box sx={{ pt: 4 }}>
                   <Form methods={methods} onSubmit={onSubmit}>
                     <Grid container spacing={2}>
@@ -106,4 +103,3 @@ export const ExchangeForm = ({
     </DialogContent>
   </Dialog>
 );
-

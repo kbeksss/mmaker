@@ -47,7 +47,7 @@ export const navData = [
   {
     subheader: 'Main',
     items: [
-      { title: 'Bots', path: paths.dashboard.root, icon: ICONS.dashboard },
+      { title: 'Dashboard', path: paths.dashboard.root, icon: ICONS.dashboard },
       { title: 'Liquidity Bot', path: paths.dashboard.liquidity, icon: ICONS.analytics },
       { title: 'Distribution Bot', path: paths.dashboard.distribution, icon: ICONS.analytics },
       { title: 'Balancer Bot', path: paths.dashboard.balancer, icon: ICONS.analytics },

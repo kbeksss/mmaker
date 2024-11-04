@@ -1,12 +1,14 @@
-import { DashboardContent } from 'src/layouts/dashboard';
+import { useSearchParams } from 'react-router-dom';
 import { Box, Button, Card, CardHeader, Grid, Stack, Typography } from '@mui/material';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import { z as zod } from 'zod';
+
+import { DashboardContent } from 'src/layouts/dashboard';
 import TradingViewWidget from 'src/components/trading-view';
 import { Field, Form } from 'src/components/hook-form';
 import React, { memo, useEffect, useMemo, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z as zod } from 'zod';
-import axios from 'axios';
 import { _botList } from 'src/_mock';
 import { BotList } from '../bot-list';
 
@@ -67,21 +69,37 @@ const getFromBinance = async () => {
   });
 };
 
-export function LiquidityBotsView({ tour }) {
+const tempEditValues = {
+  symbol: 'BTCUSDT',
+  buyDepth: 10,
+  sellDepth: 10,
+  buyNumber: 3,
+  sellNumber: 3,
+  budgetQuote: 100,
+  budgetToken: 100,
+  maxSpread: 100,
+  minSpread: 100,
+};
+
+const emptyDefaultValues = {
+  symbol: '',
+  buyDepth: 0,
+  sellDepth: 0,
+  buyNumber: 0,
+  sellNumber: 0,
+  budgetQuote: 0,
+  budgetToken: 0,
+  maxSpread: 0,
+  minSpread: 0,
+};
+
+export function LiquidityBotsView() {
+  const [searchParams] = useSearchParams();
   const defaultValues = useMemo(
-    () => ({
-      symbol: '',
-      buyDepth: undefined,
-      sellDepth: undefined,
-      buyNumber: undefined,
-      sellNumber: undefined,
-      budgetQuote: undefined,
-      budgetToken: undefined,
-      maxSpread: undefined,
-      minSpread: undefined,
-    }),
-    []
+    () => (searchParams.get('id') ? tempEditValues : emptyDefaultValues),
+    [searchParams]
   );
+
   const [isBotStarted, setIsBotStarted] = useState(false);
   const [symbols, setSymbols] = useState([]);
   useEffect(() => {
@@ -99,6 +117,13 @@ export function LiquidityBotsView({ tour }) {
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
+
+  useEffect(() => {
+    if (searchParams.get('id')) {
+      reset(tempEditValues);
+    }
+  }, [searchParams, reset]);
+
   const symbol = watch('symbol');
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -111,6 +136,9 @@ export function LiquidityBotsView({ tour }) {
   });
   return (
     <DashboardContent>
+      <Typography variant="h4" sx={{ mb: 2 }}>
+        Liquidity bot
+      </Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <TradingViewWidget symbol={symbol} />
@@ -119,7 +147,7 @@ export function LiquidityBotsView({ tour }) {
           <Form methods={methods} onSubmit={onSubmit}>
             <Stack spacing={{ xs: 1 }} sx={{ mx: 'auto', maxWidth: { xs: 720, xl: 880 } }}>
               <Card>
-                <CardHeader title="Keys" />
+                <CardHeader title="Pairs" />
                 <Stack spacing={3} sx={{ p: 3 }}>
                   <Field.Autocomplete
                     name="symbol"
@@ -195,7 +223,7 @@ export function LiquidityBotsView({ tour }) {
           </Form>
         </Grid>
         <Grid item xs={12}>
-          <BotList botList={_botList} cardHeader='Liquidity bots' tableHeads={TABLE_HEAD} />
+          <BotList botList={_botList} cardHeader="Liquidity bots" tableHeads={TABLE_HEAD} />
         </Grid>
       </Grid>
     </DashboardContent>
