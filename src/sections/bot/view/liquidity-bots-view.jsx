@@ -12,6 +12,7 @@ import { Field, Form } from 'src/components/hook-form';
 import { _botList, _exchanges } from 'src/_mock';
 
 import { BotList } from '../bot-list';
+import { BotMarketInfo } from '../bot-market-info';
 
 const TABLE_HEAD = [
   { id: 'exchangeName', label: 'Exchange' },
@@ -128,7 +129,7 @@ export function LiquidityBotsView() {
     }
   }, [searchParams, reset]);
 
-  const symbol = watch('symbol');
+  const symbol = watch('symbol') || 'BTCUSDT';
   const onSubmit = handleSubmit(async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -146,6 +147,7 @@ export function LiquidityBotsView() {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <TradingViewWidget symbol={symbol} />
+          <BotMarketInfo symbol={symbol} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <Form methods={methods} onSubmit={onSubmit}>

@@ -1,17 +1,18 @@
 import React, { memo, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Box, Button, Card, CardHeader, Grid, MenuItem, Stack, Typography } from '@mui/material';
 import { z as zod } from 'zod';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 
 import { DashboardContent } from 'src/layouts/dashboard';
-import { Box, Button, Card, CardHeader, Grid, MenuItem, Stack, Typography } from '@mui/material';
 import TradingViewWidget from 'src/components/trading-view';
 import { Field, Form } from 'src/components/hook-form';
 import { _botList, _exchanges } from 'src/_mock';
 
 import { BotList } from '../bot-list';
+import { BotMarketInfo } from '../bot-market-info';
 
 const TABLE_HEAD = [
   { id: 'exchangeName', label: 'Exchange' },
@@ -125,7 +126,7 @@ export function DistributionBotView({ tour }) {
       reset(tempEditValues);
     }
   }, [searchParams, reset]);
-  const symbol = watch('symbol');
+  const symbol = watch('symbol') || 'BTCUSDT';
   const onSubmit = handleSubmit(async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -143,6 +144,7 @@ export function DistributionBotView({ tour }) {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <TradingViewWidget symbol={symbol} />
+          <BotMarketInfo symbol={symbol} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <Form methods={methods} onSubmit={onSubmit}>
