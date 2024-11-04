@@ -355,6 +355,12 @@ export const _postTitles = [
   `The Intersection of Art and Technology: Digital Art in the 21st Century`,
 ];
 
+export const _bot_types = {
+  liquidity: 'Liquidity Bot',
+  balancer: 'Balancer Bot',
+  distribution: 'Distribution Bot',
+};
+
 // ----------------------------------------------------------------------
 
 export const _productNames = [

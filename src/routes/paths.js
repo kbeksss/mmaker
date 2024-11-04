@@ -43,6 +43,8 @@ export const paths = {
   // DASHBOARD
   dashboard: {
     root: ROOTS.DASHBOARD,
-    liquidityBots: `${ROOTS.DASHBOARD}/liquidity`,
+    liquidity: `${ROOTS.DASHBOARD}/liquidity`,
+    distribution: `${ROOTS.DASHBOARD}/distribution`,
+    balancer: `${ROOTS.DASHBOARD}/balancer`,
   },
 };

@@ -1,4 +1,5 @@
 import { _mock } from './_mock';
+import { _bot_types } from './assets';
 
 const exchanges = {
   binance: { name: 'Binance', value: 'binance', icon: '/assets/images/exchange/binance.png' },
@@ -52,8 +53,6 @@ export const _botList = exchangesArray.map((exchange, index) => ({
   status: (index % 2 && 'paused') || 'active',
 }));
 
-export const _bot_types = ['Liquidity', 'Type2', 'Type3', 'Type4']
-
 export const _botlist_all_type = exchangesArray.map((exchange, index) => ({
   id: _mock.id(index),
   exchangeName: exchange.name,
@@ -64,8 +63,8 @@ export const _botlist_all_type = exchangesArray.map((exchange, index) => ({
   secondPairBalance: _mock.number.price(index + 2),
   tradingVolume: _mock.number.percent(index),
   feesPaid: _mock.number.price(index + 3),
-  pnl: _mock.number.price(index + 4),
-  botType: _bot_types[index % 4],
+  pnl: _mock.number.price(index + 3),
+  botType: Object.values(_bot_types)[index % 3],
   avatarUrl: exchange.icon,
 
   zipCode: '85807',

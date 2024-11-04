@@ -53,17 +53,14 @@ export const AllBotsList = ({ cardHeader }) => {
         slotProps={{ arrow: { placement: 'right-top' } }}
       >
         <MenuList>
-          {_bot_types.map((type, index) => (
+          {Object.keys(_bot_types).map((key) => (
             <MenuItem
-              key={index}
+              key={key}
               onClick={() => {
-                if (type === 'Liquidity') {
-                  router.push(paths.dashboard.liquidityBots);
-                }
-                console.log(type);
+                router.push(paths.dashboard[key]);
               }}
             >
-              {type}
+              {_bot_types[key]}
             </MenuItem>
           ))}
         </MenuList>
