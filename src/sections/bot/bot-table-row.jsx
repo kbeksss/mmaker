@@ -64,15 +64,15 @@ export function BotTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow
           </Stack>
         </TableCell>
 
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.pair}</TableCell>
-
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.activeOrders}</TableCell>
-
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.originalBudget}</TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.firstPairBalance}</TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.secondPairBalance}</TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.tradingVolume}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.market}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.uptime}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.volume}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.baseBudget}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.baseBalance}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.quoteBudget}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.quoteBalance}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.feesPaid}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.activeOrders}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.pnl}</TableCell>
         {row?.botType && <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.botType}</TableCell>}
 

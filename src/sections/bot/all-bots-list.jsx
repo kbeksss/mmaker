@@ -14,16 +14,18 @@ export const BotStatuses = [
 
 const TABLE_HEAD = [
   { id: 'exchangeName', label: 'Exchange' },
-  { id: 'pair', label: 'Pair' },
+  { id: 'market', label: 'Market' },
+  { id: 'uptime', label: 'Uptime' },
+  { id: 'volume', label: 'Volume (USD)' },
+  { id: 'baseBudget', label: 'Base Budget (ETH)' },
+  { id: 'baseBalance', label: 'Base Balance (ETH)' },
+  { id: 'quoteBudget', label: 'Quote Budget (BTC)' },
+  { id: 'quoteBalance', label: 'Quote Balance (BTC)' },
+  { id: 'feesPaid', label: 'Fees Paid (USD)' },
   { id: 'activeOrders', label: 'Active Orders' },
-  { id: 'originalBudget', label: 'Or. Budget', width: 80 },
-  { id: 'firstPairBalance', label: 'Balance (1)', width: 80 },
-  { id: 'secondPairBalance', label: 'Balance (2)', width: 80 },
-  { id: 'tradingVolume', label: 'Trading Volume', width: 80 },
-  { id: 'feesPaid', label: 'Fees Paid', width: 80 },
-  { id: 'pnl', label: 'PnL', width: 80 },
+  { id: 'pnl', label: 'PnL (USD)', width: 80 },
+  { id: 'status', label: 'Status', width: 100 },
   { id: 'botType', label: 'Bot Type', width: 80 },
-
   { id: 'status', label: 'Status', width: 100 },
   { id: '', width: 88 },
 ];
