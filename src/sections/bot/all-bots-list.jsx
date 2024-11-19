@@ -24,7 +24,6 @@ const TABLE_HEAD = [
   { id: 'feesPaid', label: 'Fees Paid (USD)' },
   { id: 'activeOrders', label: 'Active Orders' },
   { id: 'pnl', label: 'PnL (USD)', width: 80 },
-  { id: 'status', label: 'Status', width: 100 },
   { id: 'botType', label: 'Bot Type', width: 80 },
   { id: 'status', label: 'Status', width: 100 },
   { id: '', width: 88 },
