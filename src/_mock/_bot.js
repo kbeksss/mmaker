@@ -38,8 +38,8 @@ export const _botList = exchangesArray.map((exchange, index) => ({
   baseBalance: '97.14 ETH',
   quoteBudget: '68.71 BTC',
   quoteBalance: '68.71 BTC',
-  feesPaid: _mock.number.price(index + 3),
-  pnl: _mock.number.price(index + 4),
+  feesPaid: `$${_mock.number.price(index + 3)}`,
+  pnl: `$${_mock.number.price(index + 4)}`,
   status: (index % 2 && 'paused') || 'active',
   avatarUrl: exchange.icon,
 
@@ -60,8 +60,8 @@ export const _botlist_all_type = exchangesArray.map((exchange, index) => ({
   exchangeName: exchange.name,
   activeOrders: index,
   volume: _mock.number.percent(index),
-  feesPaid: _mock.number.price(index + 3),
-  pnl: _mock.number.price(index + 3),
+  feesPaid: `$${_mock.number.price(index + 3)}`,
+  pnl: `$${_mock.number.price(index + 4)}`,
   botType: Object.values(_bot_types)[index % 3],
   avatarUrl: exchange.icon,
 
