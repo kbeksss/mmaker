@@ -65,7 +65,7 @@ export const _botlist_all_type = exchangesArray.map((exchange, index) => ({
   volume: _mock.number.percent(index),
   feesPaid: `$${_mock.number.price(index + 3)}`,
   pnl: `$${_mock.number.price(index + 4)}`,
-  botType: Object.values(_bot_types)[index % 3],
+  // botType: Object.values(_bot_types)[index % 3],
   avatarUrl: exchange.icon,
 
   baseCurrency: 'ETH',

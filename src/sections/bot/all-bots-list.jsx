@@ -24,7 +24,7 @@ const TABLE_HEAD = [
   { id: 'feesPaid', label: 'Fees Paid (USD)' },
   { id: 'activeOrders', label: 'Active Orders' },
   { id: 'pnl', label: 'PnL (USD)', width: 80 },
-  { id: 'botType', label: 'Bot Type', width: 80 },
+  // { id: 'botType', label: 'Bot Type', width: 80 },
   { id: 'status', label: 'Status', width: 100 },
   { id: '', width: 88 },
 ];
@@ -39,7 +39,7 @@ export const AllBotsList = ({ cardHeader }) => {
         botList={_botlist_all_type}
         tableHeads={TABLE_HEAD}
         cardHeader={cardHeader}
-        withBotTypes
+        // withBotTypes
         statuses={BotStatuses}
         action={
           <Button onClick={popover.onOpen} color="primary" variant="contained">
