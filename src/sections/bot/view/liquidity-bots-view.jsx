@@ -1,5 +1,15 @@
 import { useSearchParams } from 'react-router-dom';
-import { Box, Button, Card, CardHeader, MenuItem, Grid, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  CardHeader,
+  MenuItem,
+  Grid,
+  Stack,
+  Typography,
+  InputAdornment,
+} from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React, { memo, useEffect, useMemo, useState } from 'react';
@@ -10,9 +20,11 @@ import { DashboardContent } from 'src/layouts/dashboard';
 import TradingViewWidget from 'src/components/trading-view';
 import { Field, Form } from 'src/components/hook-form';
 import { _botList, _exchanges } from 'src/_mock';
+import { Iconify } from 'src/components/iconify';
 
 import { BotList } from '../bot-list';
 import { BotMarketInfo } from '../bot-market-info';
+import { BotFieldTooltip } from '../bot-field-tooltip';
 
 const TABLE_HEAD = [
   { id: 'exchangeName', label: 'Exchange' },
@@ -154,7 +166,12 @@ export function LiquidityBotsView() {
           <Form methods={methods} onSubmit={onSubmit}>
             <Stack spacing={{ xs: 1 }} sx={{ mx: 'auto', maxWidth: { xs: 720, xl: 880 } }}>
               <Card>
-                <CardHeader title="Exchange" />
+                <CardHeader
+                  title="Exchange"
+                  action={
+                    <BotFieldTooltip text="Choose the exchange where you want the bot to trade." />
+                  }
+                />
                 <Stack spacing={3} sx={{ p: 3 }}>
                   <Field.Select name="exchange" label="Exchange">
                     {Object.keys(_exchanges).map((key) => (
@@ -166,7 +183,12 @@ export function LiquidityBotsView() {
                 </Stack>
               </Card>
               <Card>
-                <CardHeader title="Pairs" />
+                <CardHeader
+                  title="Pairs"
+                  action={
+                    <BotFieldTooltip text="Choose the market pair to configure the bot's trading activities." />
+                  }
+                />
                 <Stack spacing={3} sx={{ p: 3 }}>
                   <Field.Autocomplete
                     name="symbol"
@@ -193,9 +215,42 @@ export function LiquidityBotsView() {
                   <Card>
                     <CardHeader title="Buy Orders Configuration" />
                     <Stack spacing={3} sx={{ p: 3 }}>
-                      <Field.Text name="buyDepth" type="number" label="Depth Percentage (Buy):" />
-                      <Field.Text name="buyNumber" type="number" label="Number of Orders (Buy):" />
-                      <Field.Text name="budgetQuote" type="number" label="Budget Quote:" />
+                      <Field.Text
+                        name="buyDepth"
+                        type="number"
+                        label="Depth Percentage (Buy):"
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <BotFieldTooltip text="Set how far from the market price buy orders should be placed, expressed as a percentage." />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                      <Field.Text
+                        name="buyNumber"
+                        type="number"
+                        label="Number of Orders (Buy):"
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <BotFieldTooltip text="Specify the number of buy orders the bot should maintain in the market" />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                      <Field.Text
+                        name="budgetQuote"
+                        type="number"
+                        label="Budget Quote:"
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <BotFieldTooltip text="Define the total amount in the quote currency to allocate for buying." />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
                     </Stack>
                   </Card>
                 </Grid>
@@ -203,13 +258,42 @@ export function LiquidityBotsView() {
                   <Card>
                     <CardHeader title="Sell Orders Configuration" />
                     <Stack spacing={3} sx={{ p: 3 }}>
-                      <Field.Text name="sellDepth" type="number" label="Depth Percentage (Sell):" />
+                      <Field.Text
+                        name="sellDepth"
+                        type="number"
+                        label="Depth Percentage (Sell):"
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <BotFieldTooltip text="Set how far from the market price sell orders should be placed, expressed as a percentage." />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
                       <Field.Text
                         name="sellNumber"
                         type="number"
                         label="Number of Orders (Sell):"
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <BotFieldTooltip text="Specify the number of sell orders the bot should maintain in the market." />
+                            </InputAdornment>
+                          ),
+                        }}
                       />
-                      <Field.Text name="budgetToken" type="number" label="Budget Token:" />
+                      <Field.Text
+                        name="budgetToken"
+                        type="number"
+                        label="Budget Token:"
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <BotFieldTooltip text="Define the total amount in the base currency to allocate for selling." />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
                     </Stack>
                   </Card>
                 </Grid>
@@ -218,10 +302,32 @@ export function LiquidityBotsView() {
                 <Box sx={{ p: 3 }}>
                   <Grid container spacing={2}>
                     <Grid item xs={6}>
-                      <Field.Text name="maxSpread" type="number" label="Max Spread BPS:" />
+                      <Field.Text
+                        name="maxSpread"
+                        type="number"
+                        label="Max Spread BPS:"
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <BotFieldTooltip text="Set the upper limit for the spread to control how far apart buy and sell orders can be placed." />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
                     </Grid>
                     <Grid item xs={6}>
-                      <Field.Text name="minSpread" type="number" label="Min Spread BPS:" />
+                      <Field.Text
+                        name="minSpread"
+                        type="number"
+                        label="Min Spread BPS:"
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <BotFieldTooltip text="Set the lower limit for the spread to ensure a minimum gap between buy and sell orders." />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
                     </Grid>
                   </Grid>
                 </Box>
