@@ -67,10 +67,26 @@ export function BotTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.market}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.uptime}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.volume}</TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.baseBudget}</TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.baseBalance}</TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.quoteBudget}</TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.quoteBalance}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>
+          <Stack spacing={1} direction="row">
+            {row.baseBudget} <Icon currency={row.baseCurrency} />
+          </Stack>
+        </TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>
+          <Stack spacing={1} direction="row">
+            {row.baseBalance} <Icon currency={row.baseCurrency} />
+          </Stack>
+        </TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>
+          <Stack spacing={1} direction="row">
+            {row.quoteBudget} <Icon currency={row.quoteCurrency} />
+          </Stack>
+        </TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>
+          <Stack spacing={1} direction="row">
+            {row.quoteBalance} <Icon currency={row.quoteCurrency} />
+          </Stack>
+        </TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.feesPaid}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.activeOrders}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.pnl}</TableCell>
@@ -151,3 +167,5 @@ export function BotTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow
     </>
   );
 }
+
+const Icon = ({ currency }) => <Iconify icon={`ri:${currency.toLowerCase()}-fill`} />;
