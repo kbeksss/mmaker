@@ -69,7 +69,7 @@ export function Exchange() {
       status: StatusType.active,
       iconUrl: selectedExchange.icon,
     };
-    await connectExchange({ ...data, exchangeName: selectedExchange.name });
+    await connectExchange({ ...data, exchangeName: selectedExchange.value });
     setConnectedList((prev) => ({ ...prev, [selectedExchange.value]: connectedExchange }));
     setFormOpen(false);
     setSelectedExchange(null);
