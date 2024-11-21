@@ -83,7 +83,7 @@ export const ExchangeForm = ({
                         <Field.Text label="Api key" name="apiKey" />
                       </Grid>
                       <Grid item xs={12} sm={6}>
-                        <Field.Text label="Secret key" name="secretKey" />
+                        <Field.Text label="Secret key" name="apiSecret" />
                       </Grid>
                     </Grid>
                     <Box sx={{ pt: 2 }}>

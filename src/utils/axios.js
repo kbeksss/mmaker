@@ -34,6 +34,11 @@ export const endpoints = {
   chat: '/api/chat',
   kanban: '/api/kanban',
   calendar: '/api/calendar',
+  exchange: {
+    connect: '/api/v1/exchange/connect',
+    status: '/api/v1/exchange/status',
+    disconnect: '/api/v1/exchange/disconnect',
+  },
   auth: {
     signIn: '/api/auth/sign-in',
     signUp: '/api/auth/sign-up',

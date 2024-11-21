@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Grid, Card, Stack, Typography, Box, Button } from '@mui/material';
 import Lottie from 'react-lottie-player';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -11,10 +11,11 @@ import { _mock } from 'src/_mock';
 import ExchangeCard from './exchange-card';
 import { ExchangeForm } from './exchange-form';
 import { ExchangeList } from './exchange-list';
+import { connectExchange, getExchangeStatus } from './action';
 
 export const KeysSchema = zod.object({
   apiKey: zod.string().min(1, { message: 'Api key is required!' }),
-  secretKey: zod.string().min(1, { message: 'Secret key is required!' }),
+  apiSecret: zod.string().min(1, { message: 'Secret key is required!' }),
 });
 
 export const StatusType = { active: 'active', paused: 'paused' };
@@ -50,7 +51,7 @@ export function Exchange() {
   const [selectedExchange, setSelectedExchange] = useState(null);
   const methods = useForm({
     resolver: zodResolver(KeysSchema),
-    defaultValues: { apiKey: '', secretKey: '' },
+    defaultValues: { apiKey: '', apiSecret: '' },
   });
 
   const {
@@ -68,11 +69,15 @@ export function Exchange() {
       status: StatusType.active,
       iconUrl: selectedExchange.icon,
     };
+    await connectExchange({ ...data, exchangeName: selectedExchange.name });
     setConnectedList((prev) => ({ ...prev, [selectedExchange.value]: connectedExchange }));
     setFormOpen(false);
     setSelectedExchange(null);
     resetForm();
   });
+  useEffect(() => {
+    getExchangeStatus().then();
+  }, []);
   return (
     <>
       <Box sx={{ pb: 4 }}>
