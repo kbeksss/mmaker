@@ -86,13 +86,7 @@ export function DashboardLayout({ sx, children, header, data }) {
                 This is an info Alert.
               </Alert>
             ),
-            bottomArea: isNavHorizontal ? (
-              <NavHorizontal
-                data={navData}
-                layoutQuery={layoutQuery}
-                cssVars={navColorVars.section}
-              />
-            ) : null,
+
             leftArea: (
               <>
                 {/* -- Nav mobile -- */}
@@ -121,6 +115,11 @@ export function DashboardLayout({ sx, children, header, data }) {
                     }}
                   />
                 )}
+                <NavHorizontal
+                  data={navData}
+                  layoutQuery={layoutQuery}
+                  cssVars={navColorVars.section}
+                />
                 {/* -- Divider -- */}
                 {isNavHorizontal && (
                   <StyledDivider
