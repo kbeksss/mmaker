@@ -15,6 +15,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Field, Form } from 'src/components/hook-form';
 import Lottie from 'react-lottie-player';
 import whaleLottie from 'src/assets/lotties/whale.json';
+import comingSoonLottie from 'src/assets/lotties/coming-soon.json';
 import ExchangeCard from './exchange-card';
 
 export const ExchangeForm = ({
@@ -66,36 +67,13 @@ export const ExchangeForm = ({
           >
             {!selectedExchange ? (
               <>
-                <Typography>Choose exchange</Typography>
+                <Typography align="center" fontWeight={600} fontSize={20}>
+                  Choose exchange
+                </Typography>
                 <Lottie loop animationData={whaleLottie} play style={{ height: 300 }} />
               </>
             ) : (
-              <Box>
-                <Stack alignItems="center">
-                  <img width={150} src={selectedExchange.icon} alt={selectedExchange.name} />
-                  <Typography variant="h2">{selectedExchange.name}</Typography>
-                </Stack>
-
-                <Box sx={{ pt: 4 }}>
-                  <Form methods={methods} onSubmit={onSubmit}>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12} sm={6}>
-                        <Field.Text label="Api key" name="apiKey" />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Field.Text label="Secret key" name="apiSecret" />
-                      </Grid>
-                    </Grid>
-                    <Box sx={{ pt: 2 }}>
-                      <Stack direction="row" justifyContent="flex-end">
-                        <Button type="submit" color="primary" variant="contained">
-                          Save connection
-                        </Button>
-                      </Stack>
-                    </Box>
-                  </Form>
-                </Box>
-              </Box>
+              <ExchangeFields exchange={selectedExchange} methods={methods} onSubmit={onSubmit} />
             )}
           </Card>
         </Grid>
@@ -103,3 +81,40 @@ export const ExchangeForm = ({
     </DialogContent>
   </Dialog>
 );
+
+const ExchangeFields = ({ exchange, methods, onSubmit }) =>
+  exchange?.value === 'binance' ? (
+    <Box>
+      <Stack alignItems="center">
+        <img width={150} src={exchange.icon} alt={exchange.name} />
+        <Typography variant="h2">{exchange.name}</Typography>
+      </Stack>
+
+      <Box sx={{ pt: 4 }}>
+        <Form methods={methods} onSubmit={onSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <Field.Text label="Api key" name="apiKey" />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Field.Text label="Secret key" name="apiSecret" />
+            </Grid>
+          </Grid>
+          <Box sx={{ pt: 2 }}>
+            <Stack direction="row" justifyContent="flex-end">
+              <Button type="submit" color="primary" variant="contained">
+                Save connection
+              </Button>
+            </Stack>
+          </Box>
+        </Form>
+      </Box>
+    </Box>
+  ) : (
+    <>
+      <Typography align="center" fontWeight={600} fontSize={20}>
+        Coming Soon
+      </Typography>
+      <Lottie loop animationData={comingSoonLottie} play style={{ height: 300 }} />
+    </>
+  );
