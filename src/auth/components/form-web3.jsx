@@ -20,7 +20,7 @@ const FormWeb3 = ({ setErrorMsg }) => {
   const { connectWallet: connectMetamask } = useMetamask({ setErrorMsg });
   return (
     <>
-      <Button size="large" variant="outlined" onClick={() => setDialogOpen(true)}>
+      <Button size="large" variant="outlined" disabled onClick={() => setDialogOpen(true)}>
         Login with web3
       </Button>
       <Dialog onClose={() => setDialogOpen(false)} open={dialogOpen}>

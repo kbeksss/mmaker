@@ -140,6 +140,7 @@ export function JwtSignInView() {
         variant="contained"
         loading={isSubmitting}
         loadingIndicator="Sign in..."
+        disabled
       >
         Sign in
       </LoadingButton>

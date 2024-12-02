@@ -130,6 +130,7 @@ export function JwtSignUpView() {
         variant="contained"
         loading={isSubmitting}
         loadingIndicator="Create account..."
+        disabled
       >
         Create account
       </LoadingButton>
