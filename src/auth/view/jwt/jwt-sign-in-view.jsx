@@ -6,12 +6,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { GoogleLogin } from '@react-oauth/google';
 import Box from '@mui/material/Box';
 import { jwtDecode } from 'jwt-decode';
-import Link from '@mui/material/Link';
+import { Link, Tooltip, Stack } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
-import { Stack } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
@@ -131,19 +130,22 @@ export function JwtSignInView() {
           }}
         />
       </Box>
-
-      <LoadingButton
-        fullWidth
-        color="inherit"
-        size="large"
-        type="submit"
-        variant="contained"
-        loading={isSubmitting}
-        loadingIndicator="Sign in..."
-        disabled
-      >
-        Sign in
-      </LoadingButton>
+      <Tooltip title="In development" arrow>
+        <span>
+          <LoadingButton
+            fullWidth
+            color="inherit"
+            size="large"
+            type="submit"
+            variant="contained"
+            loading={isSubmitting}
+            loadingIndicator="Sign in..."
+            disabled
+          >
+            Sign in
+          </LoadingButton>
+        </span>
+      </Tooltip>
       <FormWeb3 setErrorMsg={setErrorMsg} />
     </Box>
   );

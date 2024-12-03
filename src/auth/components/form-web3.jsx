@@ -12,6 +12,7 @@ import {
   ListItemButton,
   ListItemText,
   Typography,
+  Tooltip,
 } from '@mui/material';
 import { useMetamask } from '../hooks/use-metamask';
 
@@ -20,9 +21,19 @@ const FormWeb3 = ({ setErrorMsg }) => {
   const { connectWallet: connectMetamask } = useMetamask({ setErrorMsg });
   return (
     <>
-      <Button size="large" variant="outlined" disabled onClick={() => setDialogOpen(true)}>
-        Login with web3
-      </Button>
+      <Tooltip title="In development" arrow>
+        <span>
+          <Button
+            size="large"
+            fullWidth
+            variant="outlined"
+            disabled
+            onClick={() => setDialogOpen(true)}
+          >
+            Login with web3
+          </Button>
+        </span>
+      </Tooltip>
       <Dialog onClose={() => setDialogOpen(false)} open={dialogOpen}>
         <DialogTitle>Connect wallet</DialogTitle>
         <Box sx={{ p: 3 }}>
