@@ -45,7 +45,9 @@ const TABLE_HEAD = [
 
 export const BotSchema = zod
   .object({
-    exchange: zod.string({ required_error: 'Symbol is required!' }),
+    newFeature: zod.string(),
+    botVersion: zod.string({ required_error: 'Version is required' }),
+    exchange: zod.string({ required_error: 'Exchange is required!' }),
     symbol: zod.string({ required_error: 'Symbol is required!' }),
     buyDepth: zod.number(),
     sellDepth: zod.number(),
@@ -87,6 +89,8 @@ const getFromBinance = async () => {
 };
 
 const tempEditValues = {
+  newFeature: '',
+  botVersion: '1.12',
   exchange: 'binance',
   symbol: 'BTCUSDT',
   buyDepth: 10,
@@ -100,6 +104,8 @@ const tempEditValues = {
 };
 
 const emptyDefaultValues = {
+  botVersion: '',
+  newFeature: '',
   exchange: '',
   symbol: '',
   buyDepth: 0,
@@ -144,6 +150,7 @@ export function LiquidityBotsView() {
   }, [searchParams, reset]);
 
   const symbol = watch('symbol') || 'BTCUSDT';
+  const botVersion = watch('botVersion');
   const onSubmit = handleSubmit(async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -153,6 +160,7 @@ export function LiquidityBotsView() {
       console.error(error);
     }
   });
+  console.log('bot', botVersion);
   return (
     <DashboardContent>
       <Typography variant="h4" sx={{ mb: 2 }}>
@@ -168,6 +176,18 @@ export function LiquidityBotsView() {
             <Stack spacing={{ xs: 1 }} sx={{ mx: 'auto', maxWidth: { xs: 720, xl: 880 } }}>
               <Card>
                 <CardHeader
+                  title="Liquidity Version"
+                  action={<BotFieldTooltip text="Choose the bot version" />}
+                />
+                <Stack spacing={3} sx={{ p: 3 }}>
+                  <Field.Select name="botVersion" label="Bot Version">
+                    <MenuItem value="1.12">1.12</MenuItem>
+                    <MenuItem value="2.21">2.21</MenuItem>
+                  </Field.Select>
+                </Stack>
+              </Card>
+              <Card>
+                <CardHeader
                   title="Exchange"
                   action={
                     <BotFieldTooltip text="Choose the exchange where you want the bot to trade." />
@@ -180,6 +200,14 @@ export function LiquidityBotsView() {
                         {_exchanges[key].name}
                       </MenuItem>
                     ))}
+                  </Field.Select>
+                  <Field.Select
+                    disabled={botVersion !== '2.21'}
+                    helperText="For 2.21"
+                    name="newFeature"
+                    label="Some new feature (2.21)"
+                  >
+                    <MenuItem value="new">Some new feature value</MenuItem>
                   </Field.Select>
                 </Stack>
               </Card>
