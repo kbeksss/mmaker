@@ -25,7 +25,7 @@ export function Section({
   methods,
   title = 'Manage the job',
   lottyJson = signInLottie,
-  subtitle = 'Your gateway to smarter and more profitable trades.',
+  subtitle = 'Bring Instant Liquidity to Your Markets',
   ...other
 }) {
   const theme = useTheme();
