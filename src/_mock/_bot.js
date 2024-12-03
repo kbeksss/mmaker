@@ -42,6 +42,7 @@ export const _botList = exchangesArray.map((exchange, index) => ({
   pnl: `$${_mock.number.price(index + 4)}`,
   status: (index % 2 && 'paused') || 'active',
   avatarUrl: exchange.icon,
+  botVersion: (index % 2 && '1.12') || '2.21',
 
   baseCurrency: 'ETH',
   quoteCurrency: 'BTC',

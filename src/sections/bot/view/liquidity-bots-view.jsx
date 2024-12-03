@@ -19,7 +19,7 @@ import { z as zod } from 'zod';
 import { DashboardContent } from 'src/layouts/dashboard';
 import TradingViewWidget from 'src/components/trading-view';
 import { Field, Form } from 'src/components/hook-form';
-import { _botList, _exchanges } from 'src/_mock';
+import { _bot_types, _botList, _exchanges } from 'src/_mock';
 import { Iconify } from 'src/components/iconify';
 
 import { BotList } from '../bot-list';
@@ -31,6 +31,7 @@ const TABLE_HEAD = [
   { id: 'market', label: 'Market' },
   { id: 'uptime', label: 'Uptime' },
   { id: 'volume', label: 'Volume (USD)' },
+  { id: 'botVersion', label: 'Bot Version' },
   { id: 'baseBudget', label: 'Base Budget (ETH)' },
   { id: 'baseBalance', label: 'Base Balance (ETH)' },
   { id: 'quoteBudget', label: 'Quote Budget (BTC)' },
@@ -348,7 +349,13 @@ export function LiquidityBotsView() {
           </Form>
         </Grid>
         <Grid item xs={12}>
-          <BotList botList={_botList} cardHeader="Liquidity bots" tableHeads={TABLE_HEAD} />
+          <BotList
+            toolbarOptions={{ botVersions: ['1.12', '2.21'] }}
+            withBotTypes
+            botList={_botList}
+            cardHeader="Liquidity bots"
+            tableHeads={TABLE_HEAD}
+          />
         </Grid>
       </Grid>
     </DashboardContent>

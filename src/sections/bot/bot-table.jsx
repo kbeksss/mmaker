@@ -39,8 +39,16 @@ import { BotTableRow } from './bot-table-row';
 import { BotTableToolbar } from './bot-table-toolbar';
 import { BotTableFiltersResult } from './bot-table-filters-result';
 
-export const BotTable = ({ statuses, botList, tableHeads, withBotTypes, cardHeader, action }) => {
-  const filters = useSetState({ botType: [], status: 'all' });
+export const BotTable = ({
+  statuses,
+  botList,
+  tableHeads,
+  withBotTypes,
+  cardHeader,
+  action,
+  toolbarOptions,
+}) => {
+  const filters = useSetState({ botType: [], status: 'all', botVersion: [] });
   const [tableData, setTableData] = useState(botList);
   const confirm = useBoolean();
   const router = useRouter();
@@ -140,11 +148,11 @@ export const BotTable = ({ statuses, botList, tableHeads, withBotTypes, cardHead
             />
           ))}
         </Tabs>
-        {withBotTypes && (
+        {toolbarOptions && (
           <BotTableToolbar
             filters={filters}
             onResetPage={table.onResetPage}
-            options={{ botTypes: Object.values(_bot_types) }}
+            options={toolbarOptions}
           />
         )}
         {canReset && (
@@ -255,7 +263,7 @@ export const BotTable = ({ statuses, botList, tableHeads, withBotTypes, cardHead
 };
 
 function applyFilter({ inputData, comparator, filters }) {
-  const { status, botType } = filters;
+  const { status, botType, botVersion } = filters;
 
   const stabilizedThis = inputData.map((el, index) => [el, index]);
 
@@ -268,11 +276,15 @@ function applyFilter({ inputData, comparator, filters }) {
   inputData = stabilizedThis.map((el) => el[0]);
 
   if (status !== 'all') {
-    inputData = inputData.filter((user) => user.status === status);
+    inputData = inputData.filter((item) => item.status === status);
   }
 
   if (botType.length) {
-    inputData = inputData.filter((user) => botType.includes(user.botType));
+    inputData = inputData.filter((item) => botType.includes(item.botType));
+  }
+
+  if (botVersion.length) {
+    inputData = inputData.filter((item) => botVersion.includes(item.botVersion));
   }
 
   return inputData;

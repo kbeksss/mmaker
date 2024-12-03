@@ -21,6 +21,16 @@ export function BotTableToolbar({ filters, options, onResetPage }) {
     },
     [filters, onResetPage]
   );
+  const handleFilterVersion = useCallback(
+    (event) => {
+      const newValue =
+        typeof event.target.value === 'string' ? event.target.value.split(',') : event.target.value;
+
+      onResetPage();
+      filters.setState({ botVersion: newValue });
+    },
+    [filters, onResetPage]
+  );
 
   return (
     <>
@@ -30,29 +40,56 @@ export function BotTableToolbar({ filters, options, onResetPage }) {
         direction={{ xs: 'column', md: 'row' }}
         sx={{ p: 2.5, pr: { xs: 2.5, md: 1 } }}
       >
-        <FormControl sx={{ flexShrink: 0, width: { xs: 1, md: 200 } }}>
-          <InputLabel htmlFor="user-filter-botType-select-label">Bot Type</InputLabel>
-          <Select
-            multiple
-            value={filters.state.botType}
-            onChange={handleFilterType}
-            input={<OutlinedInput label="Bot Type" />}
-            renderValue={(selected) => selected.map((value) => value).join(', ')}
-            inputProps={{ id: 'user-filter-botType-select-label' }}
-            MenuProps={{ PaperProps: { sx: { maxHeight: 240 } } }}
-          >
-            {options.botTypes.map((option) => (
-              <MenuItem key={option} value={option}>
-                <Checkbox
-                  disableRipple
-                  size="small"
-                  checked={filters.state.botType.includes(option)}
-                />
-                {option}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        {options?.botTypes?.length && (
+          <FormControl sx={{ flexShrink: 0, width: { xs: 1, md: 200 } }}>
+            <InputLabel htmlFor="user-filter-botType-select-label">Bot Type</InputLabel>
+            <Select
+              multiple
+              value={filters.state.botType}
+              onChange={handleFilterType}
+              input={<OutlinedInput label="Bot Type" />}
+              renderValue={(selected) => selected.map((value) => value).join(', ')}
+              inputProps={{ id: 'user-filter-botType-select-label' }}
+              MenuProps={{ PaperProps: { sx: { maxHeight: 240 } } }}
+            >
+              {options.botTypes.map((option) => (
+                <MenuItem key={option} value={option}>
+                  <Checkbox
+                    disableRipple
+                    size="small"
+                    checked={filters.state.botType.includes(option)}
+                  />
+                  {option}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )}
+        {options?.botVersions?.length && (
+          <FormControl sx={{ flexShrink: 0, width: { xs: 1, md: 200 } }}>
+            <InputLabel htmlFor="user-filter-botVersion-select-label">Liquidity Version</InputLabel>
+            <Select
+              multiple
+              value={filters.state.botVersion}
+              onChange={handleFilterVersion}
+              input={<OutlinedInput label="Bot Version" />}
+              renderValue={(selected) => selected.map((value) => value).join(', ')}
+              inputProps={{ id: 'user-filter-botVersion-select-label' }}
+              MenuProps={{ PaperProps: { sx: { maxHeight: 240 } } }}
+            >
+              {options.botVersions.map((option) => (
+                <MenuItem key={option} value={option}>
+                  <Checkbox
+                    disableRipple
+                    size="small"
+                    checked={filters.state.botVersion.includes(option)}
+                  />
+                  {option}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )}
       </Stack>
     </>
   );

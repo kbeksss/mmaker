@@ -8,11 +8,12 @@ export const BotStatuses = [
   { value: 'paused', label: 'Paused' },
 ];
 
-export const BotList = ({ tableHeads, botList, withBotTypes, cardHeader }) => (
+export const BotList = ({ tableHeads, botList, withBotTypes, cardHeader, toolbarOptions }) => (
   <Box>
     <BotTable
       botList={botList}
       tableHeads={tableHeads}
+      toolbarOptions={toolbarOptions}
       cardHeader={cardHeader}
       withBotTypes={withBotTypes}
       statuses={BotStatuses}

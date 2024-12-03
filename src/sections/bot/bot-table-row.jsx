@@ -67,6 +67,7 @@ export function BotTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.market}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.uptime}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.volume}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.botVersion}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>
           <Stack spacing={1} direction="row">
             {row.baseBudget} <Icon currency={row.baseCurrency} />
