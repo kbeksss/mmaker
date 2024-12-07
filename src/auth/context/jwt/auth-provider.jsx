@@ -2,11 +2,10 @@ import { useMemo, useEffect, useCallback } from 'react';
 
 import { useSetState } from 'src/hooks/use-set-state';
 
-import axios, { endpoints } from 'src/utils/axios';
+import axios, { endpoints, setSession, STORAGE_KEY, STORAGE_REFRESH_KEY } from 'src/utils/axios';
 
-import { STORAGE_KEY } from './constant';
 import { AuthContext } from '../auth-context';
-import { setSession, isValidToken } from './utils';
+import { isValidToken } from './utils';
 
 // ----------------------------------------------------------------------
 
@@ -19,19 +18,46 @@ export function AuthProvider({ children }) {
   const checkUserSession = useCallback(async () => {
     try {
       const accessToken = sessionStorage.getItem(STORAGE_KEY);
+      const refreshToken = sessionStorage.getItem(STORAGE_REFRESH_KEY);
+
+      console.log('accessToken', accessToken);
+      console.log('refreshToken', refreshToken);
 
       if (accessToken && isValidToken(accessToken)) {
-        setSession(accessToken);
+        setSession(accessToken, refreshToken);
 
         const res = await axios.get(endpoints.user.me);
         const user = res.data;
-        // const user = { fullName: 'Some name' }; // todo: revert
+
         setState({ user: { ...user, accessToken }, loading: false });
+      } else if (refreshToken) {
+        console.log('refr:', refreshToken);
+        try {
+          const res = await axios.post(endpoints.auth.refresh, { refresh_token: refreshToken });
+
+          const { accessToken: newAccessToken, refreshToken: newRefreshToken } = res.data;
+
+          if (newAccessToken) {
+            setSession(newAccessToken, newRefreshToken);
+
+            const userRes = await axios.get(endpoints.user.me);
+            const user = userRes.data;
+
+            setState({ user: { ...user, accessToken: newAccessToken }, loading: false });
+          } else {
+            throw new Error('Failed to refresh token');
+          }
+        } catch (refreshError) {
+          console.error('Error refreshing token:', refreshError);
+          sessionStorage.removeItem(STORAGE_KEY);
+          sessionStorage.removeItem(STORAGE_REFRESH_KEY);
+          setState({ user: null, loading: false });
+        }
       } else {
         setState({ user: null, loading: false });
       }
     } catch (error) {
-      console.error(error);
+      console.error('Error during session check:', error);
       setState({ user: null, loading: false });
     }
   }, [setState]);

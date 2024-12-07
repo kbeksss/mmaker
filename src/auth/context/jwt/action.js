@@ -1,7 +1,4 @@
-import axios, { endpoints } from 'src/utils/axios';
-
-import { setSession } from './utils';
-import { STORAGE_KEY } from './constant';
+import axios, { endpoints, setSession, STORAGE_KEY } from 'src/utils/axios';
 
 /** **************************************
  * Sign in
@@ -12,13 +9,13 @@ export const signInOAth = async ({ token, name }) => {
 
     const res = await axios.post(endpoints.auth.oAth, params);
 
-    const { accessToken } = res.data;
-
+    const { accessToken, refreshToken } = res.data;
+    console.log('ref', refreshToken);
     if (!accessToken) {
       throw new Error('Access token not found in response');
     }
 
-    setSession(accessToken);
+    setSession(accessToken, refreshToken);
   } catch (error) {
     console.error('Error during sign in:', error);
     throw error;
