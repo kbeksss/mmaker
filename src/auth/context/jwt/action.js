@@ -10,7 +10,6 @@ export const signInOAth = async ({ token, name }) => {
     const res = await axios.post(endpoints.auth.oAth, params);
 
     const { accessToken, refreshToken } = res.data;
-    console.log('ref', refreshToken);
     if (!accessToken) {
       throw new Error('Access token not found in response');
     }

@@ -20,9 +20,6 @@ export function AuthProvider({ children }) {
       const accessToken = sessionStorage.getItem(STORAGE_KEY);
       const refreshToken = sessionStorage.getItem(STORAGE_REFRESH_KEY);
 
-      console.log('accessToken', accessToken);
-      console.log('refreshToken', refreshToken);
-
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken, refreshToken);
 
@@ -31,7 +28,6 @@ export function AuthProvider({ children }) {
 
         setState({ user: { ...user, accessToken }, loading: false });
       } else if (refreshToken) {
-        console.log('refr:', refreshToken);
         try {
           const res = await axios.post(endpoints.auth.refresh, { refresh_token: refreshToken });
 
