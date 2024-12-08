@@ -29,7 +29,7 @@ axiosInstance.interceptors.response.use(
       } catch (refreshError) {
         console.error('Token refresh failed:', refreshError);
         sessionStorage.removeItem(STORAGE_KEY);
-        sessionStorage.removeItem();
+        sessionStorage.removeItem(STORAGE_REFRESH_KEY);
         window.location.href = paths.auth.jwt.signIn;
       }
     }
@@ -72,7 +72,7 @@ export async function setSession(accessToken, refreshToken) {
       }
     } else {
       sessionStorage.removeItem(STORAGE_KEY);
-      sessionStorage.removeItem('refreshToken');
+      sessionStorage.removeItem(STORAGE_REFRESH_KEY);
       delete axiosInstance.defaults.headers.common.Authorization;
     }
   } catch (error) {
@@ -83,7 +83,7 @@ export async function setSession(accessToken, refreshToken) {
 
 export const refreshAccessToken = async () => {
   try {
-    const refreshToken = sessionStorage.getItem('refreshToken');
+    const refreshToken = sessionStorage.getItem(STORAGE_REFRESH_KEY);
     if (!refreshToken) {
       throw new Error('No refresh token available');
     }
@@ -152,7 +152,7 @@ export function tokenExpired(exp) {
 
   setTimeout(() => {
     try {
-      console.log('refresh')
+      console.log('refresh');
     } catch (error) {
       console.error('Error during token expiration:', error);
       throw error;
