@@ -3,16 +3,13 @@ import { Outlet } from 'react-router-dom';
 
 import { SplashScreen } from 'src/components/loading-screen';
 import { SimpleLayout } from 'src/layouts/simple';
-import { CONFIG } from '../../config-global';
-import { AuthGuard } from '../../auth/guard/index';
 
 // ----------------------------------------------------------------------
 
 // Error
-const Page404 = lazy(() => import('src/pages/error/404'));
-const PricingPage = lazy(() => import('src/pages/pricing'));
 const OnboardingPage = lazy(() => import('src/pages/onboarding'));
-const UserAccountPage = lazy(() => import('src/pages/account'));
+const Page404 = lazy(() => import('src/pages/error/404'));
+
 
 // ----------------------------------------------------------------------
 const layoutContent = (
@@ -21,31 +18,16 @@ const layoutContent = (
   </Suspense>
 );
 
-export const mainRoutes = [
+export const publicRoutes = [
   {
-    element: CONFIG.auth.skip ? <>{layoutContent}</> : <AuthGuard>{layoutContent}</AuthGuard>,
+    element: <>{layoutContent}</>,
     children: [
-      {
-        path: 'pricing',
-        element: (
-          <SimpleLayout>
-            <PricingPage />
-          </SimpleLayout>
-        ),
-      },
+
       {
         path: 'onboarding',
         element: (
           <SimpleLayout>
             <OnboardingPage />
-          </SimpleLayout>
-        ),
-      },
-      {
-        path: 'account',
-        element: (
-          <SimpleLayout>
-            <UserAccountPage />
           </SimpleLayout>
         ),
       },

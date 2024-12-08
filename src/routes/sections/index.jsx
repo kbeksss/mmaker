@@ -5,6 +5,7 @@ import { CONFIG } from 'src/config-global';
 import { authRoutes } from './auth';
 import { mainRoutes } from './main';
 import { dashboardRoutes } from './dashboard';
+import { publicRoutes } from './public';
 
 // ----------------------------------------------------------------------
 
@@ -20,7 +21,7 @@ export function Router() {
 
     // Dashboard
     ...dashboardRoutes,
-
+    ...publicRoutes,
     // Main
     ...mainRoutes,
 
