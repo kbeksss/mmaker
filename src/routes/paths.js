@@ -11,9 +11,6 @@ const ROOTS = {
 export const paths = {
   faqs: '/faqs',
   minimalStore: 'https://mui.com/store/items/minimal-dashboard/',
-  public: {
-    onboarding: '/onboarding',
-  },
   // AUTH
   auth: {
     amplify: {

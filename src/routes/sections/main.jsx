@@ -11,7 +11,6 @@ import { AuthGuard } from '../../auth/guard/index';
 // Error
 const Page404 = lazy(() => import('src/pages/error/404'));
 const PricingPage = lazy(() => import('src/pages/pricing'));
-const OnboardingPage = lazy(() => import('src/pages/onboarding'));
 const UserAccountPage = lazy(() => import('src/pages/account'));
 
 // ----------------------------------------------------------------------
@@ -30,14 +29,6 @@ export const mainRoutes = [
         element: (
           <SimpleLayout>
             <PricingPage />
-          </SimpleLayout>
-        ),
-      },
-      {
-        path: 'onboarding',
-        element: (
-          <SimpleLayout>
-            <OnboardingPage />
           </SimpleLayout>
         ),
       },
