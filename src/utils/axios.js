@@ -110,6 +110,10 @@ export const endpoints = {
   chat: '/api/chat',
   kanban: '/api/kanban',
   calendar: '/api/calendar',
+  bot: {
+    start: '/api/v1/bot/start',
+    stop: '/api/v1/bot/stop',
+  },
   exchange: {
     connect: '/api/v1/exchange/connect',
     status: '/api/v1/exchange/status',

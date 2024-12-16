@@ -25,6 +25,7 @@ import { Iconify } from 'src/components/iconify';
 import { BotList } from '../bot-list';
 import { BotMarketInfo } from '../bot-market-info';
 import { BotFieldTooltip } from '../bot-field-tooltip';
+import { startBot } from '../actions';
 
 const TABLE_HEAD = [
   { id: 'exchangeName', label: 'Exchange' },
@@ -153,14 +154,26 @@ export function LiquidityBotsView() {
   const botVersion = watch('botVersion');
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      const res = await startBot({
+        bot_name: 'liquidity_bot',
+        exchange_name: data?.exchange,
+        trading_pair: data?.symbol,
+        budget_token: data?.budgetToken,
+        budget_quote: data?.budgetQuote,
+        buy_number_of_orders: data?.buyNumber,
+        sell_number_of_orders: data?.sellNumber,
+        min_spread_bps: data?.minSpread,
+        max_spread_bps: data?.maxSpread,
+        buy_depth_percentage: data?.buyDepth,
+        sell_depth_percentage: data?.sellDepth,
+      });
+      console.log('res', res);
       reset();
       console.info('DATA', data);
     } catch (error) {
       console.error(error);
     }
   });
-  console.log('bot', botVersion);
   return (
     <DashboardContent>
       <Typography variant="h4" sx={{ mb: 2 }}>
@@ -364,7 +377,7 @@ export function LiquidityBotsView() {
               <Card>
                 <Box sx={{ p: 3 }}>
                   <Button
-                    onClick={() => setIsBotStarted((prev) => !prev)}
+                    type="submit"
                     fullWidth
                     variant="contained"
                     color={isBotStarted ? 'error' : 'primary'}
