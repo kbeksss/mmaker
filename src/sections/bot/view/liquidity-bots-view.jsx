@@ -168,7 +168,7 @@ export function LiquidityBotsView() {
         sell_depth_percentage: data?.sellDepth,
       });
       console.log('res', res);
-      reset();
+      // reset();
       console.info('DATA', data);
     } catch (error) {
       console.error(error);
