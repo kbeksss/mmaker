@@ -20,6 +20,7 @@ const OnboardingModal = ({ modalOpen, handleClose }) => {
   const onNext = () => {
     if (step >= 2) {
       handleClose();
+      navigate(paths.dashboard.exchanges);
     } else {
       setStep((prev) => prev + 1);
     }
@@ -85,9 +86,8 @@ const steps = [
         </Stack>
       </Box>
       <Typography sx={{ mb: 2 }} align="center" variant="h6">
-        1. Connect to popular exchanges like Binance and add your API key to link the exchange
-        account securely. Easily manage liquidity without ever compromising the safety of your
-        funds.
+        Connect to popular exchanges like Binance and add your API key to link the exchange account
+        securely. Easily manage liquidity without ever compromising the safety of your funds.
       </Typography>
     </DialogContent>
   </>,
