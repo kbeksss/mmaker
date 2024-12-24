@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Button,
-  Container,
   Dialog,
   DialogActions,
   DialogContent,
@@ -13,14 +12,16 @@ import {
 } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
+import { useQueryParams } from '../../hooks/use-query-params';
 
 const OnboardingModal = ({ modalOpen, handleClose }) => {
   const [step, setStep] = useState(0);
   const navigate = useNavigate();
+  const { navigateWithParams } = useQueryParams();
   const onNext = () => {
     if (step >= 2) {
       handleClose();
-      navigate(paths.dashboard.exchanges);
+      navigateWithParams(paths.dashboard.exchanges, { open: '1' });
     } else {
       setStep((prev) => prev + 1);
     }

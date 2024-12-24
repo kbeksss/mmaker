@@ -12,6 +12,7 @@ import ExchangeCard from './exchange-card';
 import { ExchangeForm } from './exchange-form';
 import { ExchangeList } from './exchange-list';
 import { connectExchange, getExchangeStatus } from './action';
+import { useQueryParams } from '../../hooks/use-query-params';
 
 export const KeysSchema = zod.object({
   apiKey: zod.string().min(1, { message: 'Api key is required!' }),
@@ -45,7 +46,8 @@ const exchanges = {
 };
 
 export function Exchange() {
-  const [formOpen, setFormOpen] = useState(false);
+  const { getParam } = useQueryParams();
+  const [formOpen, setFormOpen] = useState(!!getParam('open'));
 
   const [connectedList, setConnectedList] = useState({});
   const [selectedExchange, setSelectedExchange] = useState(null);
